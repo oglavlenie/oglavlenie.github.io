@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EN0R95BZQS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EN0R95BZQS');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F3F7FD">
+<title>Оглавление — умный каталог для Telegram-канала прямо в шапке</title>
+<meta name="description" content="Кнопка «Оглавление» в шапке канала: весь архив с поиском, рубриками, месяцами и форматами. Без серверов — бесплатно на GitHub Pages. Запуск от 5 минут.">
+<meta property="og:title" content="Оглавление — канал становится каталогом">
+<meta property="og:description" content="Подписчики находят любой пост за 5 секунд. Кнопка прямо в шапке Telegram. Хостинг 0 ₽ — живёт на GitHub Pages.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://oglavlenie.github.io/">
+<meta property="og:image" content="https://oglavlenie.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Оглавление — канал становится каталогом">
+<meta property="og:site_name" content="Оглавление">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Оглавление — канал становится каталогом">
+<meta name="twitter:description" content="Подписчики находят любой пост за 5 секунд. Кнопка прямо в шапке Telegram. Хостинг 0 ₽ — живёт на GitHub Pages.">
+<meta name="twitter:image" content="https://oglavlenie.github.io/og-image.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F7FD; --bg2:#E9F1FB;
+  --card:#FFFFFF; --card2:#F2F7FF;
+  --stroke:#DCE6F3; --stroke2:#C6D6EB;
+  --text:#0D1B2E; --muted:#41536D; --dim:#5F6F88;
+  --tg:#2AABEE; --violet:#7C6CFF; --cyan:#0EA5E9;
+  --green:#10B981; --red:#E85D75; --amber:#D97706;
+  --grad:linear-gradient(135deg,#2AABEE 0%,#7C6CFF 100%);
+  --grad2:linear-gradient(135deg,#0EA5E9 0%,#7C6CFF 55%,#E85FA8 100%);
+  --grad-text:linear-gradient(135deg,#0369A1 0%,#5B4BE0 55%,#C9397E 100%);
+  --r:20px; --r-lg:28px;
+  --shadow:0 24px 60px rgba(23,68,130,.16);
+  --shadow-sm:0 1px 2px rgba(23,68,130,.06),0 10px 26px rgba(23,68,130,.09);
+  --glow-tg:0 0 40px rgba(42,171,238,.22);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.6;
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.font-display{font-family:'Unbounded','Manrope',sans-serif}
+::selection{background:rgba(42,171,238,.35)}
+a{color:inherit}
+
+/* ── фоновые пятна и сетка ───────────────────────── */
+.bg-decor{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+.blob-1{width:560px;height:560px;background:rgba(42,171,238,.20);top:-180px;left:-120px;animation:drift 26s ease-in-out infinite alternate}
+.blob-2{width:520px;height:520px;background:rgba(124,108,255,.17);top:20%;right:-160px;animation:drift 32s ease-in-out infinite alternate-reverse}
+.blob-3{width:460px;height:460px;background:rgba(34,211,238,.11);bottom:-160px;left:30%;animation:drift 38s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.12)}}
+.bg-grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(13,42,89,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(13,42,89,.06) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 40%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 40%,transparent 100%)}
+
+/* ── контейнер и кнопки ──────────────────────────── */
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:'Manrope',sans-serif;font-weight:700;font-size:16px;
+  padding:15px 30px;border-radius:14px;text-decoration:none;cursor:pointer;border:none;
+  transition:transform .25s ease,box-shadow .25s ease,background .25s ease}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 10px 30px rgba(42,171,238,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 42px rgba(42,171,238,.5)}
+.btn-ghost{background:var(--card);color:var(--text);border:1px solid var(--stroke2)}
+.btn-ghost:hover{background:var(--card2);transform:translateY(-2px)}
+.btn-lg{padding:18px 38px;font-size:17px;border-radius:16px}
+
+/* ── навигация ───────────────────────────────────── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(255,255,255,.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(13,42,89,.1)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Unbounded',sans-serif;font-weight:600;font-size:17px;text-decoration:none}
+.logo-ico{width:34px;height:34px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--glow-tg)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:600;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.nav-cta .btn{padding:10px 20px;font-size:14px}
+.burger{display:none;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer;padding:6px}
+.mobile-menu{display:none;flex-direction:column;gap:4px;padding:12px 24px 20px;border-top:1px solid rgba(13,42,89,.07)}
+.mobile-menu a{color:var(--muted);text-decoration:none;font-weight:600;padding:11px 4px;border-bottom:1px solid rgba(13,42,89,.06)}
+.mobile-menu a:last-child{border-bottom:none}
+.mobile-menu.open{display:flex}
+
+/* ── переключатель языка ─────────────────────────── */
+.lang-switch{display:flex;gap:2px;background:var(--card);border:1px solid var(--stroke2);
+  border-radius:100px;padding:3px;flex-shrink:0}
+.lang-btn{background:none;border:none;color:var(--muted);font-family:'Manrope',sans-serif;
+  font-weight:800;font-size:12px;letter-spacing:.6px;padding:6px 13px;border-radius:100px;
+  cursor:pointer;transition:background .2s,color .2s}
+.lang-btn.active{background:var(--grad);color:#fff}
+.lang-btn:not(.active):hover{color:var(--text)}
+
+/* ── hero ────────────────────────────────────────── */
+.hero{padding:150px 0 90px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:100px;
+  background:rgba(42,171,238,.08);border:1px solid rgba(42,171,238,.25);
+  color:#0E68A8;font-size:13px;font-weight:700;letter-spacing:.4px;margin-bottom:26px}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero h1{font-size:clamp(30px,4.4vw,52px);font-weight:800;line-height:1.14;letter-spacing:-.5px;margin-bottom:22px}
+.grad-text{background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{font-size:clamp(16px,1.6vw,19px);color:var(--muted);max-width:560px;margin-bottom:34px}
+.hero-sub b{color:var(--text)}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px}
+.hero-stats{display:grid;grid-template-columns:repeat(2,1fr);border:1px solid var(--stroke);border-radius:var(--r);background:var(--card);overflow:hidden;box-shadow:var(--shadow-sm)}
+.stat{padding:16px 22px;border-right:1px solid var(--stroke);border-bottom:1px solid var(--stroke)}
+.stat:nth-child(2n){border-right:none}
+.stat:nth-child(n+3){border-bottom:none}
+.stat-num{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:600;white-space:nowrap;background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat-cap{font-size:12.5px;color:var(--dim);font-weight:700;margin-top:4px;line-height:1.35}
+
+/* ── живая статистика (v1.7.30) ─────────────────── */
+.live-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:38px}
+.live-card{background:var(--card);border:1px solid var(--stroke);border-radius:var(--r);
+  padding:28px 22px;text-align:center;box-shadow:var(--shadow-sm);
+  transition:transform .25s ease,box-shadow .25s ease}
+.live-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.live-num{font-family:'Unbounded',sans-serif;font-size:30px;font-weight:600;white-space:nowrap;
+  background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.live-cap{font-size:13px;color:var(--dim);font-weight:700;margin-top:8px;line-height:1.4}
+.live-note{margin-top:18px;text-align:center;font-size:12.5px;color:var(--dim);font-weight:600}
+@media(max-width:900px){.live-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.live-grid{grid-template-columns:1fr}}
+
+/* ── телефон-мокап ───────────────────────────────── */
+.phone-zone{position:relative;display:flex;flex-direction:column;align-items:center}
+.phone{width:320px;border-radius:44px;background:#10182B;border:1px solid var(--stroke2);
+  box-shadow:var(--shadow),0 0 80px rgba(42,171,238,.14);padding:12px;position:relative;
+  animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.phone::before{content:'';position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  width:110px;height:26px;background:#10182B;border-radius:16px;z-index:5}
+.screen{border-radius:34px;overflow:hidden;background:#FFFFFF;color:#13233B;display:flex;flex-direction:column;height:600px}
+.tg-head{padding:34px 16px 10px;display:flex;align-items:center;gap:10px;background:#F7FAFD;border-bottom:1px solid rgba(13,42,89,.08)}
+.tg-ava{width:38px;height:38px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.tg-name{font-size:14px;font-weight:700}
+.tg-status{font-size:11px;color:var(--green)}
+.tg-icons{margin-left:auto;color:var(--dim);font-size:15px;letter-spacing:6px}
+.pinned-btn{margin:10px 12px 0;display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:13px;
+  background:linear-gradient(135deg,rgba(42,171,238,.16),rgba(124,108,255,.16));
+  border:1px solid rgba(42,171,238,.4);cursor:default;position:relative}
+.pinned-btn::after{content:'';position:absolute;inset:-1px;border-radius:13px;
+  box-shadow:0 0 22px rgba(42,171,238,.4);animation:pinGlow 2.6s ease-in-out infinite;pointer-events:none}
+@keyframes pinGlow{0%,100%{opacity:.4}50%{opacity:1}}
+.pinned-ico{width:34px;height:34px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.pinned-txt{font-size:13px;font-weight:700}
+.pinned-sub{font-size:10.5px;color:#1B8AD6;font-weight:600}
+.pinned-arrow{margin-left:auto;color:#1B8AD6;font-size:13px}
+.chat-fake{flex:1;padding:12px 14px;display:flex;flex-direction:column;gap:8px;opacity:.55;filter:blur(.2px)}
+.msg{max-width:82%;padding:8px 12px;border-radius:14px;background:#EEF3FA;font-size:11px;color:#45566E}
+.msg.self{align-self:flex-end;background:#DCF5C8}
+.miniapp{margin:auto 10px 12px;background:#F4F8FD;border-radius:20px;overflow:hidden;color:#1F2937;
+  box-shadow:0 -8px 40px rgba(23,68,130,.18)}
+.ma-top{padding:14px 14px 8px}
+.ma-title{font-size:13.5px;font-weight:800;font-family:'Manrope',sans-serif;display:flex;align-items:center;gap:7px}
+.ma-close{margin-left:auto;width:22px;height:22px;border-radius:50%;background:#E4EAF3;display:flex;align-items:center;justify-content:center;font-size:10px;color:#5B6472}
+.ma-search{margin-top:10px;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #D8E2F0;border-radius:12px;padding:9px 12px;font-size:12px;color:#5B6472}
+.ma-search .cursor{display:inline-block;width:1.5px;height:13px;background:var(--tg);animation:blink 1s steps(1) infinite;vertical-align:middle}
+@keyframes blink{50%{opacity:0}}
+.ma-chips{display:flex;gap:6px;padding:10px 14px 4px;flex-wrap:wrap}
+.ma-chip{font-size:10.5px;font-weight:700;padding:5px 11px;border-radius:100px;background:#E8EEF7;color:#5B6472}
+.ma-chip.on{background:var(--tg);color:#fff}
+.ma-cards{padding:8px 12px 14px;display:flex;flex-direction:column;gap:7px}
+.ma-card{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid #E4EAF3;border-radius:13px;padding:9px 11px}
+.ma-emoji{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ma-card-title{font-size:11.5px;font-weight:700;line-height:1.3}
+.ma-card-meta{font-size:9.5px;color:#8A94A6;font-weight:600}
+.ma-tag{margin-left:auto;font-size:9px;font-weight:800;padding:3px 8px;border-radius:100px}
+.phone-note{margin-top:22px;text-align:center;font-size:13px;color:var(--dim);font-weight:600}
+.phone-note b{color:#0E68A8}
+
+/* ── бегущая строка ──────────────────────────────── */
+.marquee{border-top:1px solid var(--stroke);border-bottom:1px solid var(--stroke);
+  padding:16px 0;overflow:hidden;background:rgba(255,255,255,.6);position:relative}
+.marquee-track{display:flex;gap:44px;width:max-content;animation:scroll 30s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{display:flex;align-items:center;gap:12px;white-space:nowrap;font-weight:700;font-size:14.5px;color:var(--muted)}
+.marquee-item .sep{color:var(--tg);font-size:11px}
+/* ── секции общие ────────────────────────────────── */
+.section{padding:110px 0;scroll-margin-top:80px}
+.sec-tag{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;letter-spacing:1.4px;
+  text-transform:uppercase;color:#0E68A8;margin-bottom:16px}
+.sec-tag::before{content:'';width:26px;height:2px;background:var(--grad);border-radius:2px}
+.sec-title{font-size:clamp(26px,3.4vw,40px);font-weight:800;line-height:1.18;letter-spacing:-.4px;margin-bottom:16px}
+.sec-sub{font-size:17px;color:var(--muted);max-width:680px;margin-bottom:52px}
+.sec-center{text-align:center}
+.sec-center .sec-sub{margin-left:auto;margin-right:auto}
+.sec-center .sec-tag{justify-content:center}
+
+/* ── боль ────────────────────────────────────────── */
+.pain-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.pain-card{background:var(--card);border:1px solid var(--stroke);border-radius:var(--r-lg);padding:30px;
+  position:relative;overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .3s ease,border-color .3s ease}
+.pain-card:hover{transform:translateY(-4px);border-color:rgba(251,113,133,.4)}
+.pain-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--red),transparent);opacity:.6}
+.pain-ico{width:52px;height:52px;border-radius:15px;background:rgba(251,113,133,.12);border:1px solid rgba(251,113,133,.25);
+  display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px}
+.pain-card h3{font-size:18px;font-weight:700;margin-bottom:12px;line-height:1.35}
+.pain-card p{font-size:14.5px;color:var(--muted)}
+.pain-total{margin-top:26px;padding:24px 30px;border-radius:var(--r);
+  background:linear-gradient(90deg,rgba(251,113,133,.12),rgba(124,108,255,.08));
+  border:1px solid rgba(251,113,133,.3);display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.pain-total b{font-family:'Unbounded',sans-serif;font-weight:600;font-size:17px}
+.pain-total span{color:var(--muted);font-size:15px}
+
+/* ── было / стало ────────────────────────────────── */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.cmp{border-radius:var(--r-lg);padding:34px;border:1px solid var(--stroke);position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
+.cmp-bad{background:linear-gradient(180deg,rgba(251,113,133,.07),rgba(251,113,133,.02))}
+.cmp-good{background:linear-gradient(180deg,rgba(52,211,153,.08),rgba(52,211,153,.02));border-color:rgba(52,211,153,.25)}
+.cmp-head{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.cmp-badge{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:100px}
+.cmp-bad .cmp-badge{background:rgba(251,113,133,.15);color:var(--red)}
+.cmp-good .cmp-badge{background:rgba(52,211,153,.15);color:var(--green)}
+.cmp-time{margin-left:auto;font-family:'Unbounded',sans-serif;font-size:15px;font-weight:600}
+.cmp-bad .cmp-time{color:var(--red)}
+.cmp-good .cmp-time{color:var(--green)}
+.cmp-steps{display:flex;flex-direction:column;gap:12px}
+.cmp-step{display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,.8);border:1px solid var(--stroke);
+  border-radius:16px;padding:14px 18px}
+.cmp-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:800;flex-shrink:0;margin-top:1px}
+.cmp-bad .cmp-num{background:rgba(251,113,133,.18);color:var(--red)}
+.cmp-good .cmp-num{background:rgba(52,211,153,.18);color:var(--green)}
+.cmp-step b{display:block;font-size:14.5px;margin-bottom:2px}
+.cmp-step span{font-size:13px;color:var(--muted)}
+
+/* ── bento-возможности ───────────────────────────── */
+.bento{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.b-card{background:var(--card);border:1px solid var(--stroke);border-radius:var(--r-lg);padding:28px;
+  position:relative;overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .3s ease,border-color .3s ease,background .3s ease}
+.b-card:hover{transform:translateY(-4px);background:var(--card2);border-color:var(--stroke2)}
+.b-card.wide{grid-column:span 2}
+.b-ico{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:23px;margin-bottom:18px;
+  background:rgba(42,171,238,.12);border:1px solid rgba(42,171,238,.28)}
+.b-card h3{font-size:17.5px;font-weight:700;margin-bottom:10px;line-height:1.4}
+.b-card p{font-size:14px;color:var(--muted)}
+.b-visual{margin-top:22px;background:#F2F7FD;border:1px solid var(--stroke);border-radius:16px;padding:16px}
+.bv-btn{display:flex;align-items:center;gap:10px;background:var(--grad);border-radius:12px;padding:11px 16px;
+  font-size:13.5px;font-weight:800;color:#fff;box-shadow:0 8px 24px rgba(42,171,238,.35)}
+.bv-btn small{margin-left:auto;font-weight:600;opacity:.85;font-size:11px}
+.bv-hint{font-size:11.5px;color:var(--dim);margin-top:10px;text-align:center;font-weight:600}
+.chips-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.chip{font-size:12.5px;font-weight:700;padding:8px 15px;border-radius:100px;
+  background:rgba(42,171,238,.08);border:1px solid rgba(42,171,238,.3);color:#0E68A8}
+.b-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.b-head .b-ico{margin-bottom:0}
+.b-num{font-family:'Unbounded',sans-serif;font-size:32px;font-weight:800;white-space:nowrap;line-height:1;
+  background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ── шаги ────────────────────────────────────────── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:step}
+.step{background:var(--card);border:1px solid var(--stroke);border-radius:var(--r-lg);padding:30px;position:relative;box-shadow:var(--shadow-sm)}
+.step-num{width:44px;height:44px;border-radius:13px;background:var(--grad);display:flex;align-items:center;justify-content:center;
+  font-family:'Unbounded',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-bottom:20px;box-shadow:0 8px 22px rgba(42,171,238,.35)}
+.step h3{font-size:17.5px;font-weight:700;margin-bottom:10px;line-height:1.4}
+.step p{font-size:14px;color:var(--muted)}
+.step .step-time{display:inline-block;margin-top:16px;font-size:12px;font-weight:800;color:#0E68A8;
+  background:rgba(42,171,238,.08);border:1px solid rgba(42,171,238,.3);padding:5px 12px;border-radius:100px}
+.steps-note{margin-top:24px;padding:22px 28px;border-radius:var(--r);text-align:center;
+  background:linear-gradient(90deg,rgba(42,171,238,.1),rgba(124,108,255,.1));border:1px solid rgba(124,108,255,.3);
+  font-size:15px;color:var(--muted)}
+.steps-note b{color:var(--text)}
+
+/* ── кому подходит ──────────────────────────────── */
+.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.who-card{background:var(--card);border:1px solid var(--stroke);border-radius:var(--r-lg);padding:28px;
+  position:relative;overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .3s ease,border-color .3s ease}
+.who-card:hover{transform:translateY(-4px);border-color:rgba(52,211,153,.45)}
+.who-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--green),transparent);opacity:.55}
+.who-ico{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:23px;margin-bottom:16px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3)}
+.who-card h3{font-size:17.5px;font-weight:700;margin-bottom:14px;line-height:1.4;min-height:49px}
+.who-pain{font-size:14px;color:var(--muted);margin-bottom:12px}
+.who-fix{font-size:14px;color:var(--muted)}
+.who-lbl{display:block;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
+.who-pain .who-lbl{color:var(--red)}
+.who-fix .who-lbl{color:var(--green)}
+.who-note{margin-top:24px;padding:22px 28px;border-radius:var(--r);text-align:center;
+  background:linear-gradient(90deg,rgba(52,211,153,.1),rgba(42,171,238,.1));border:1px solid rgba(52,211,153,.3);
+  font-size:15px;color:var(--muted)}
+.who-note b{color:var(--text)}
+
+/* ── тарифы ──────────────────────────────────────── */
+.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:stretch}
+.price{background:var(--card);border:1px solid var(--stroke);border-radius:var(--r-lg);padding:34px 30px;
+  display:flex;flex-direction:column;position:relative;box-shadow:var(--shadow-sm);transition:transform .3s ease,border-color .3s ease}
+.price:hover{transform:translateY(-5px)}
+.price.hot{background:linear-gradient(180deg,rgba(42,171,238,.12),rgba(124,108,255,.07));
+  border:1.5px solid rgba(42,171,238,.55);box-shadow:0 24px 70px rgba(42,171,238,.18)}
+.hot-badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);
+  background:var(--grad);color:#fff;font-size:12px;font-weight:800;letter-spacing:.6px;
+  padding:7px 18px;border-radius:100px;box-shadow:0 8px 22px rgba(42,171,238,.45);white-space:nowrap}
+.price-name{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--text);min-height:66px;line-height:1.35}
+.price-val{font-family:'Unbounded',sans-serif;font-size:34px;font-weight:800;line-height:1;margin-bottom:8px}
+.price-val small{font-size:15px;font-weight:600;color:var(--muted)}
+.price-per{font-size:13px;color:var(--dim);font-weight:700;margin-bottom:24px;min-height:42px}
+.year-badge{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:800;color:#8A6300;background:linear-gradient(90deg,rgba(255,184,0,.16),rgba(255,184,0,.05));border:1px dashed rgba(232,158,0,.55);padding:11px 14px;border-radius:14px;margin-bottom:22px}
+.price-feats{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:30px;flex:1}
+.price-feats li{display:flex;gap:10px;font-size:14px;color:var(--muted);align-items:flex-start}
+.price-feats li::before{content:'✓';color:var(--green);font-weight:800;flex-shrink:0}
+.price-feats li.no::before{content:'—';color:var(--dim)}
+.price .btn{width:100%}
+.price-note{margin-top:26px;text-align:center;font-size:14px;color:var(--dim)}
+.price-note b{color:var(--muted)}
+
+/* ── FAQ ─────────────────────────────────────────── */
+.faq{max-width:800px;margin:0 auto}
+.faq-item{background:var(--card);border:1px solid var(--stroke);border-radius:18px;margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow-sm);transition:border-color .3s}
+.faq-item[open]{border-color:rgba(42,171,238,.4)}
+.faq-q{width:100%;background:none;border:none;color:var(--text);font-family:'Manrope',sans-serif;
+  font-size:16px;font-weight:700;text-align:left;padding:22px 26px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-q::after{content:'+';font-size:24px;font-weight:400;color:var(--tg);transition:transform .3s;flex-shrink:0}
+.faq-item[open] .faq-q::after{transform:rotate(45deg)}
+.faq-a{padding:0 26px 24px;color:var(--muted);font-size:15px}
+
+/* ── финальный CTA ───────────────────────────────── */
+.final{margin:40px auto 0;max-width:1080px;border-radius:34px;padding:70px 50px;text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(42,171,238,.16),rgba(124,108,255,.16) 55%,rgba(232,95,168,.10));
+  border:1px solid rgba(42,171,238,.28)}
+.final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 90% at 50% -20%,rgba(42,171,238,.15),transparent)}
+.final h2{font-size:clamp(26px,3.4vw,40px);font-weight:800;margin-bottom:14px;position:relative}
+.final p{color:var(--muted);font-size:17px;margin-bottom:36px;position:relative}
+.final-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
+.demo-mini{margin-top:22px;font-size:13.5px;color:var(--dim);position:relative}
+.demo-mini a{color:#0E68A8;font-weight:700;text-decoration:none}
+.demo-mini a:hover{text-decoration:underline}
+
+/* ── футер ───────────────────────────────────────── */
+footer{border-top:1px solid var(--stroke);margin-top:90px;padding:36px 0 44px}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot-links{display:flex;gap:24px}
+.foot-links a{color:var(--dim);text-decoration:none;font-size:13.5px;font-weight:600;transition:color .2s}
+.foot-links a:hover{color:var(--text)}
+.foot-copy{font-size:13px;color:var(--dim)}
+
+/* ── reveal-анимации ─────────────────────────────── */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+.reveal:nth-child(2){transition-delay:.08s}
+.reveal:nth-child(3){transition-delay:.16s}
+.reveal:nth-child(4){transition-delay:.24s}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .phone,.blob,.marquee-track{animation:none}
+  html{scroll-behavior:auto}
+}
+
+/* ── адаптив ─────────────────────────────────────── */
+@media (max-width:1020px){
+  .hero-grid{grid-template-columns:1fr;gap:48px}
+  .phone-zone{order:2}
+  .hero{padding:120px 0 70px}
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .who-grid{grid-template-columns:repeat(2,1fr)}
+  .b-card.wide{grid-column:span 2}
+  .price-grid{grid-template-columns:repeat(2,1fr);max-width:720px;margin:0 auto}
+  .hot-badge{left:24px;transform:none}
+}
+@media (max-width:760px){
+  .nav-links{display:none}
+  .nav-cta .btn{display:none}
+  .burger{display:block}
+  .lang-btn{padding:5px 10px;font-size:11px}
+  .pain-grid,.compare,.bento,.steps,.who-grid{grid-template-columns:1fr}
+  .price-grid{grid-template-columns:1fr;max-width:460px;margin:0 auto}
+  .b-card.wide{grid-column:span 1}
+  .section{padding:70px 0}
+  .final{padding:54px 26px;border-radius:26px}
+  .phone{width:290px}
+  .screen{height:560px}
+}
+@media (max-width:380px){
+  .hero-stats{grid-template-columns:1fr}
+  .stat{border-right:none;border-bottom:1px solid var(--stroke)}
+  .stat:last-child{border-bottom:none}
+}
+/* ── видео-обзор (вертикальные Shorts, Task 181) ── */
+.video-zone{display:flex;flex-direction:column;align-items:center;gap:22px;margin-top:34px}
+.short-frame{position:relative;width:min(330px,86vw);aspect-ratio:9/16;border-radius:20px;overflow:hidden;
+  background:#0B1420;box-shadow:0 24px 60px -24px rgba(13,42,80,.45),0 0 0 1px var(--stroke);
+  transition:transform .25s ease,box-shadow .25s ease}
+.short-frame:hover{transform:translateY(-4px);box-shadow:0 30px 70px -24px rgba(13,42,80,.55),0 0 0 1px var(--stroke2)}
+.short-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-note{font-size:13px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="bg-decor">
+  <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<!-- ═══ НАВИГАЦИЯ ═══ -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#top"><span class="logo-ico">📑</span> <span data-i18n="brand">Оглавление</span></a>
+    <div class="nav-links">
+      <a href="#pain" data-i18n="nav_pain">Проблема</a>
+      <a href="#solution" data-i18n="nav_sol">Решение</a>
+      <a href="#features" data-i18n="nav_feat">Возможности</a>
+      <a href="#who" data-i18n="nav_who">Кому подходит</a>
+      <a href="#how" data-i18n="nav_how">Запуск</a>
+      <a href="#pricing" data-i18n="nav_pr">Тарифы</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <div class="lang-switch" role="group" aria-label="Language / Язык">
+        <button class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button><button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="nav_cta">🚀 Запустить в боте</a>
+      <button class="burger" id="burger" aria-label="Меню">☰</button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#pain" data-i18n="nav_pain">Проблема</a>
+    <a href="#solution" data-i18n="nav_sol">Решение</a>
+    <a href="#features" data-i18n="nav_feat">Возможности</a>
+    <a href="#who" data-i18n="nav_who">Кому подходит</a>
+    <a href="#how" data-i18n="nav_how">Запуск</a>
+    <a href="#pricing" data-i18n="nav_pr">Тарифы</a>
+    <a href="#faq" data-i18n="nav_faq">FAQ</a>
+    <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" style="color:#1180C4" data-i18n="nav_cta">🚀 Запустить в боте</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="pill"><span class="dot"></span> <span data-i18n="hero_pill">TELEGRAM MINI APP · БЕЗ СЕРВЕРОВ И ПЛАТНОГО ХОСТИНГА</span></div>
+      <h1 data-i18n="hero_h1">Лучшие посты канала <span class="grad-text">никто не видит</span></h1>
+      <p class="hero-sub" data-i18n="hero_sub">«Оглавление» превращает Telegram-канал в <b>каталог с поиском</b>: кнопка прямо в шапке, подписчик находит нужное за <b>5 секунд</b> вместо 10 минут прокрутки — а старый контент снова продаёт.</p>
+      <div class="hero-actions">
+        <a href="https://t.me/newsmydemobot/toc" target="_blank" rel="noopener" class="btn btn-ghost btn-lg" data-i18n="hero_demo" data-demo-link>📲 Открыть живое демо</a>
+        <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-i18n="hero_order">🚀 Заказать в боте</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num" data-i18n="st1n">5 мин</div><div class="stat-cap" data-i18n="st1c">на подписке — бот собирает каталог сам</div></div>
+        <div class="stat"><div class="stat-num" data-i18n="st2n">0 ₽</div><div class="stat-cap" data-i18n="st2c">хостинг — живёт на GitHub Pages</div></div>
+        <div class="stat"><div class="stat-num" data-i18n="st3n">5 режимов</div><div class="stat-cap" data-i18n="st3c">поиск по всему архиву</div></div>
+        <div class="stat"><div class="stat-num">RU / EN</div><div class="stat-cap" data-i18n="st4c">два языка интерфейса</div></div>
+      </div>
+    </div>
+    <div class="phone-zone">
+      <div class="phone">
+        <div class="screen">
+          <div class="tg-head">
+            <div class="tg-ava">🍳</div>
+            <div><div class="tg-name" data-i18n="ph_name">Кулинарный клуб</div><div class="tg-status" data-i18n="ph_status">● 12 400 подписчиков</div></div>
+            <div class="tg-icons">···✎</div>
+          </div>
+          <div class="pinned-btn">
+            <div class="pinned-ico">📑</div>
+            <div><div class="pinned-txt" data-i18n="ph_pin_t">Оглавление</div><div class="pinned-sub" data-i18n="ph_pin_s">каталог канала · 482 поста</div></div>
+            <div class="pinned-arrow">›</div>
+          </div>
+          <div class="chat-fake">
+            <div class="msg" data-i18n="ph_m1">Новый рецепт: борщ по-домашнему 🥣</div>
+            <div class="msg self" data-i18n="ph_m2">Подборка специй — сохраните!</div>
+            <div class="msg" data-i18n="ph_m3">Мастер-класс в субботу 🎓</div>
+          </div>
+          <div class="miniapp">
+            <div class="ma-top">
+              <div class="ma-title">📑 <span data-i18n="ph_ma_t">Оглавление</span> <span class="ma-close">✕</span></div>
+              <div class="ma-search">🔍 <span id="typing"></span><span class="cursor"></span></div>
+            </div>
+            <div class="ma-chips">
+              <span class="ma-chip on" data-i18n="ph_chip1">Рубрики</span><span class="ma-chip" data-i18n="ph_chip2">Месяцы</span>
+              <span class="ma-chip" data-i18n="ph_chip3">Алфавит</span><span class="ma-chip" data-i18n="ph_chip4">Форматы</span>
+            </div>
+            <div class="ma-cards">
+              <div class="ma-card"><div class="ma-emoji" style="background:#E8F5EE">🥣</div>
+                <div><div class="ma-card-title" data-i18n="ph_c1t">Борщ по-домашнему — пошагово</div><div class="ma-card-meta" data-i18n="ph_c1m">Рецепты · 12 марта</div></div>
+                <span class="ma-tag" style="background:#E8F5EE;color:#1F9D61" data-i18n="ph_c1g">Рецепт</span></div>
+              <div class="ma-card"><div class="ma-emoji" style="background:#EDF0FE">🎓</div>
+                <div><div class="ma-card-title" data-i18n="ph_c2t">Мастер-класс: 5 базовых соусов</div><div class="ma-card-meta" data-i18n="ph_c2m">Видео · 28 февраля</div></div>
+                <span class="ma-tag" style="background:#EDF0FE;color:#6C63FF" data-i18n="ph_c2g">Видео</span></div>
+              <div class="ma-card"><div class="ma-emoji" style="background:#FFF4E0">🧂</div>
+                <div><div class="ma-card-title" data-i18n="ph_c3t">Гид по специям: что с чем сочетать</div><div class="ma-card-meta" data-i18n="ph_c3m">Гайд · 9 февраля</div></div>
+                <span class="ma-tag" style="background:#FFF4E0;color:#C77B1A" data-i18n="ph_c3g">Гайд</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-note" data-i18n="ph_note">👆 Так это видит подписчик: <b>кнопка в шапке</b> → каталог с поиском</div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ БЕГУЩАЯ СТРОКА ═══ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-item"><span data-i18n="mq1">📂 Рубрики</span> <span class="sep">◆</span></span>
+    <span class="marquee-item"><span data-i18n="mq2">📅 Месяцы</span> <span class="sep">◆</span></span>
+    <span class="marquee-item"><span data-i18n="mq3">🔤 Алфавит</span> <span class="sep">◆</span></span>
+    <span class="marquee-item"><span data-i18n="mq4">📄 Форматы</span> <span class="sep">◆</span></span>
+    <span class="marquee-item"><span data-i18n="mq5">🔍 Поиск</span> <span class="sep">◆</span></span>
+    <span class="marquee-item"><span data-i18n="mq6">0 ₽ хостинг навсегда</span> <span class="sep">◆</span></span>
+    <span class="marquee-item"><span data-i18n="mq7">Обновления v1.x бесплатно</span> <span class="sep">◆</span></span>
+    <span class="marquee-item"><span data-i18n="mq8">14 дней на возврат</span> <span class="sep">◆</span></span>
+    <span class="marquee-item"><span data-i18n="mq9">RU / EN</span> <span class="sep">◆</span></span>
+    <span class="marquee-item"><span data-i18n="mq10">Год сразу — 2 месяца в подарок</span> <span class="sep">◆</span></span>
+  </div>
+</div>
+
+<!-- ═══ БОЛЬ ═══ -->
+<section class="section" id="pain">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-tag" data-i18n="pain_tag">Проблема</div>
+      <h2 class="sec-title" data-i18n="pain_title">Почему канал перестаёт продавать,<br>даже когда контент отличный</h2>
+      <p class="sec-sub" data-i18n="pain_sub">Telegram-канал — это витрина вашего дела. Но у ленты есть физика, которая работает против вас. Вот что происходит с каждым постом.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-ico">🕐</div>
+        <h3 data-i18n="pc1h">Пост умирает за 48 часов</h3>
+        <p data-i18n="pc1p">Лента — конвейер: свежий пост вытесняет предыдущий. Через два дня ваш мастер-класс, обзор или прайс не видит уже никто — кроме тех, кто готов листать сотни сообщений вниз. Неделя труда живёт два дня и уходит в архив, который никто не открывает.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-ico">🔍</div>
+        <h3 data-i18n="pc2h">Поиск Telegram не ищет по каналу</h3>
+        <p data-i18n="pc2p">Встроенный поиск находит сообщения по точным словам и часто теряет медиа и подписи. Клиент помнит: «у вас же было про это» — и не находит. Он не станет листать 400 постов. Он просто уйдёт туда, где искать удобно.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-ico">📌</div>
+        <h3 data-i18n="pc3h">Один закреп не может быть витриной</h3>
+        <p data-i18n="pc3p">Закреп один — а товаров, гайдов и услуг десятки. Обновлять его бесконечно нельзя, а список из двадцати ссылок в закрепе никто не читает. У каждого магазина есть витрина и указатели — у вашего канала, по сути, нет ничего.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-ico">💬</div>
+        <h3 data-i18n="pc4h">Личка горит, админ выгорает</h3>
+        <p data-i18n="pc4p">«А где смотреть?», «скиньте прайс», «было же что-то про это» — одни и те же вопросы по 20 раз в день. Каждый ручной ответ — минуты времени. А клиент, который не дождался, — это уже не минута, это потерянные деньги.</p>
+      </div>
+    </div>
+    <div class="pain-total reveal">
+      <b data-i18n="pain_b">80–90% ценности канала — в архиве.</b>
+      <span data-i18n="pain_s">Сейчас этот архив не работает ни дня: новые посты видят все, старые — никто. Вы платите за рекламу новых постов, а ценность старых сгорает каждый день.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ БЫЛО / СТАЛО ═══ -->
+<section class="section" id="solution" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-tag" data-i18n="sol_tag">Решение</div>
+      <h2 class="sec-title" data-i18n="sol_title">Что меняет одна кнопка в шапке</h2>
+      <p class="sec-sub" data-i18n="sol_sub">«Оглавление» — мини-приложение, которое живёт прямо в вашем канале. Смотрите, как меняется путь клиента.</p>
+    </div>
+    <div class="compare">
+      <div class="cmp cmp-bad reveal">
+        <div class="cmp-head"><span class="cmp-badge" data-i18n="cb_bad">Сейчас</span><span class="cmp-time" data-i18n="cb_t">≈ 10 минут</span></div>
+        <div class="cmp-steps">
+          <div class="cmp-step"><span class="cmp-num">1</span><div><b data-i18n="cb1b">Гость заходит в канал</b><span data-i18n="cb1s">и видит бесконечную простыню постов</span></div></div>
+          <div class="cmp-step"><span class="cmp-num">2</span><div><b data-i18n="cb2b">Пытается что-то найти</b><span data-i18n="cb2s">листает, ищет глазами, сдаётся</span></div></div>
+          <div class="cmp-step"><span class="cmp-num">3</span><div><b data-i18n="cb3b">Спрашивает в личке</b><span data-i18n="cb3s">«а где у вас…?» — и ждёт ответа</span></div></div>
+          <div class="cmp-step"><span class="cmp-num">4</span><div><b data-i18n="cb4b">Не дожидается — уходит</b><span data-i18n="cb4s">к конкуренту, у которого всё «на виду»</span></div></div>
+        </div>
+      </div>
+      <div class="cmp cmp-good reveal">
+        <div class="cmp-head"><span class="cmp-badge" data-i18n="cg_bad">С «Оглавлением»</span><span class="cmp-time" data-i18n="cg_t">≈ 5 секунд</span></div>
+        <div class="cmp-steps">
+          <div class="cmp-step"><span class="cmp-num">1</span><div><b data-i18n="cg1b">Жмёт кнопку в шапке канала</b><span data-i18n="cg1s">«📑 Оглавление» — всегда на виду</span></div></div>
+          <div class="cmp-step"><span class="cmp-num">2</span><div><b data-i18n="cg2b">Выбирает рубрику или ищет словами</b><span data-i18n="cg2s">категории, месяцы, форматы, мгновенный поиск</span></div></div>
+          <div class="cmp-step"><span class="cmp-num">3</span><div><b data-i18n="cg3b">Открывает нужный пост</b><span data-i18n="cg3s">прямо в Telegram, без переходов на сайт</span></div></div>
+          <div class="cmp-step"><span class="cmp-num">4</span><div><b data-i18n="cg4b">Покупает, записывается, подписывается</b><span data-i18n="cg4s">архив снова работает на вас</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ═══ ВИДЕО-ОБЗОР (Shorts, Task 181) ═══ -->
+<section class="section" id="video" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal sec-center">
+      <div class="sec-tag" data-i18n="vid_tag">Видео</div>
+      <h2 class="sec-title" data-i18n="vid_title">Вся суть — в одном коротком видео</h2>
+      <p class="sec-sub" data-i18n="vid_sub">Вертикальный обзор: как каталог выглядит и работает прямо в Telegram.</p>
+    </div>
+    <div class="video-zone reveal">
+      <div class="short-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/N7CpbRabP5Q?rel=0"
+                title="Оглавление — видео-обзор" loading="lazy" allowfullscreen
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                data-video-link></iframe>
+      </div>
+      <a href="https://t.me/newsmydemobot/toc" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="vid_cta" data-demo-link>📲 Открыть живое демо</a>
+      <div class="video-note" data-i18n="vid_note">Видео на русском — переключите язык страницы, чтобы посмотреть английскую версию</div>
+    </div>
+  </div>
+</section>
+<!-- ═══ ВОЗМОЖНОСТИ (BENTO) ═══ -->
+<section class="section" id="features" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-tag" data-i18n="ft_tag">Возможности</div>
+      <h2 class="sec-title" data-i18n="ft_title">Каталог, который собирается<br>и обновляется сам</h2>
+      <p class="sec-sub" data-i18n="ft_sub">Никакой рутины: бот раскладывает архив по полочкам, GitHub Pages бесплатно хранит его, а кнопка в шапке открывает в один тап.</p>
+    </div>
+    <div class="bento">
+      <div class="b-card wide reveal">
+        <div class="b-ico">📑</div>
+        <h3 data-i18n="f1h">Кнопка в шапке канала</h3>
+        <p data-i18n="f1p">Закреплённая кнопка «Оглавление» всегда перед глазами каждого подписчика. Один тап — и весь канал как на ладони: посты, рубрики, материалы. Не нужно никуда переходить — всё живёт внутри Telegram.</p>
+        <div class="b-visual">
+          <div class="bv-btn" data-i18n="f_bv">📑 Оглавление <small>каталог канала ›</small></div>
+          <div class="bv-hint" data-i18n="f_hint">выглядит и работает вот так — попробуйте в демо</div>
+        </div>
+      </div>
+      <div class="b-card reveal">
+        <div class="b-ico">🗂</div>
+        <h3 data-i18n="f2h">5 режимов навигации</h3>
+        <p data-i18n="f2p">Любой материал находится привычным способом — как в настоящем каталоге.</p>
+        <div class="chips-row">
+          <span class="chip" data-i18n="f_ch1">📂 Рубрики</span><span class="chip" data-i18n="f_ch2">📅 Месяцы</span>
+          <span class="chip" data-i18n="f_ch3">🔤 Алфавит</span><span class="chip" data-i18n="f_ch4">📄 Форматы</span>
+          <span class="chip" data-i18n="f_ch5">🔍 Поиск</span>
+        </div>
+      </div>
+      <div class="b-card reveal">
+        <div class="b-ico">⚙️</div>
+        <h3 data-i18n="f3h">Обновляется автоматически</h3>
+        <p data-i18n="f3p">Отредактировали пост или добавили новый — каталог пересобирается сам через GitHub Actions. Ноль ручной работы.</p>
+      </div>
+      <div class="b-card reveal">
+        <div class="b-head"><div class="b-ico">🆓</div><div class="b-num" data-i18n="f_num">0 ₽</div></div>
+        <h3 data-i18n="f4h">Хостинг — навсегда бесплатно</h3>
+        <p data-i18n="f4p">Каталог живёт на GitHub Pages в вашем собственном репозитории. Никаких серверов, никаких ежемесячных платежей.</p>
+      </div>
+      <div class="b-card reveal">
+        <div class="b-ico">🌍</div>
+        <h3 data-i18n="f5h">Russian / English</h3>
+        <p data-i18n="f5p">Интерфейс и каталог на двух языках — для каналов с международной аудиторией.</p>
+      </div>
+      <div class="b-card wide reveal">
+        <div class="b-ico">🤖</div>
+        <h3 data-i18n="f6h">ИИ-консультант установит за вас</h3>
+        <p data-i18n="f6p">В боте @oglavlenie_shop_bot живёт ассистент: проводит установку по шагам, отвечает на вопросы 24/7, а на тарифе «Установим вместе» — доводит до готовой кнопки вместе с вами. Личный кабинет, история покупок и реферальная программа — внутри бота.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ КОМУ ПОДХОДИТ ═══ -->
+<section class="section" id="who" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-tag" data-i18n="who_tag">Кому подходит</div>
+      <h2 class="sec-title" data-i18n="who_title">Разные каналы — разная боль</h2>
+      <p class="sec-sub" data-i18n="who_sub">Продающему каналу нужна витрина, писателю — порядок глав, эксперту — программа курса. Найдите себя: под каждой задачей «Оглавление» работает по-своему.</p>
+    </div>
+    <div class="who-grid">
+      <div class="who-card reveal">
+        <div class="who-ico">🛍</div>
+        <h3 data-i18n="w1h">Продающие каналы и магазины</h3>
+        <p class="who-pain"><span class="who-lbl" data-i18n="who_l1">Боль</span><span data-i18n="w1p">Товары, прайс и условия теряются в ленте: клиент видит последний пост — и не догадывается, что за плечами сотни позиций. Каждый «сколько стоит?» приходится отрабатывать вручную в личке.</span></p>
+        <p class="who-fix"><span class="who-lbl" data-i18n="who_l2">С оглавлением</span><span data-i18n="w1f">Каталог становится витриной: рубрики по категориям, поиск по названию, товар в два тапа. Прайс больше не пересылают — его открывают.</span></p>
+      </div>
+      <div class="who-card reveal">
+        <div class="who-ico">✍️</div>
+        <h3 data-i18n="w2h">Блогеры и авторские каналы</h3>
+        <p class="who-pain"><span class="who-lbl" data-i18n="who_l1">Боль</span><span data-i18n="w2p">Вы пишете годами, а новый подписчик видит последние десять постов. Лучшие тексты, за которые вы когда-то получали охваты, навсегда спрятаны в глубине ленты.</span></p>
+        <p class="who-fix"><span class="who-lbl" data-i18n="who_l2">С оглавлением</span><span data-i18n="w2f">Лучшее всегда на виду: подборка рубрик становится входом для новых подписчиков. Старые тексты снова читают — и подписываются уже на вас.</span></p>
+      </div>
+      <div class="who-card reveal">
+        <div class="who-ico">📚</div>
+        <h3 data-i18n="w3h">Писатели и авторы серий</h3>
+        <p class="who-pain"><span class="who-lbl" data-i18n="who_l1">Боль</span><span data-i18n="w3p">Роман по главам, цикл статей, лонгрид из шести частей — читатель теряется между частями и бросает на середине. Telegram не умеет показывать «глава 1 из 12».</span></p>
+        <p class="who-fix"><span class="who-lbl" data-i18n="who_l2">С оглавлением</span><span data-i18n="w3f">У каждой серии своё оглавление: главы в порядке чтения, навигация по месяцам и алфавиту. Читатель открывает следующую главу, а не ищет её по ленте.</span></p>
+      </div>
+      <div class="who-card reveal">
+        <div class="who-ico">🎓</div>
+        <h3 data-i18n="w4h">Обучение и эксперты</h3>
+        <p class="who-pain"><span class="who-lbl" data-i18n="who_l1">Боль</span><span data-i18n="w4p">Уроки, разборы и мастер-классы выходят неделями — и рассыпаются по ленте. Ученик не видит программу целиком и не доходит до результата, ради которого приходил.</span></p>
+        <p class="who-fix"><span class="who-lbl" data-i18n="who_l2">С оглавлением</span><span data-i18n="w4f">Каталог превращается в программу: модули в порядке прохождения, материалы по форматам. Ученик видит весь путь — и доходит до конца.</span></p>
+      </div>
+      <div class="who-card reveal">
+        <div class="who-ico">💼</div>
+        <h3 data-i18n="w5h">Услуги и фриланс</h3>
+        <p class="who-pain"><span class="who-lbl" data-i18n="who_l1">Боль</span><span data-i18n="w5p">Кейсы, отзывы, этапы работы и цены — всё в одном закрепе, который давно не переписывался. Каждое «а покажите ваши работы?» — это экскурсия вручную.</span></p>
+        <p class="who-fix"><span class="who-lbl" data-i18n="who_l2">С оглавлением</span><span data-i18n="w5f">Портфолио всегда под рукой: кейсы по рубрикам, отзывы и форматы отдельно. Клиент сам находит нужное ещё до первого сообщения вам.</span></p>
+      </div>
+      <div class="who-card reveal">
+        <div class="who-ico">🧭</div>
+        <h3 data-i18n="w6h">Подборки и медиа</h3>
+        <p class="who-pain"><span class="who-lbl" data-i18n="who_l1">Боль</span><span data-i18n="w6p">Сотни ссылок, карточек и постов-ресурсов. Без поиска канал — склад: заходят по наводке, не находят нужного и уходят, чтобы не возвращаться.</span></p>
+        <p class="who-fix"><span class="who-lbl" data-i18n="who_l2">С оглавлением</span><span data-i18n="w6f">Канал становится справочником: алфавит, форматы, мгновенный поиск. Подписчик возвращается сам — за нужным здесь и сейчас.</span></p>
+      </div>
+    </div>
+    <div class="who-note reveal" data-i18n="who_note">Не нашли себя в списке? Рубрики, месяцы и форматы каталог определяет из вашего контента автоматически — он подстроится и под нишу, которой здесь нет.</div>
+  </div>
+</section>
+
+<!-- ═══ КАК ЗАПУСТИТЬ ═══ -->
+<section class="section" id="how" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-tag" data-i18n="how_tag">Запуск</div>
+      <h2 class="sec-title" data-i18n="how_title">Три шага до кнопки в шапке</h2>
+      <p class="sec-sub" data-i18n="how_sub">Это путь тарифа «Самостоятельно»: делаете всё сами по инструкции — без помощи Мастера. На «Установим вместе» и «Премиум» всем этим заниматься не нужно: всё сделаем за вас.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h3 data-i18n="hs1h">Экспорт канала</h3>
+        <p data-i18n="hs1p">В Telegram Desktop: «…» → Экспорт канала, формат JSON. Дальше инструкция ведёт по шагам, с картинками.</p>
+        <span class="step-time" data-i18n="hs1t">⏱ 2 минуты</span>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <h3 data-i18n="hs2h">Комплект в ваш GitHub</h3>
+        <p data-i18n="hs2p">Загрузите файлы в свой репозиторий по инструкции — каталог соберётся автоматически. Свой код, свой репозиторий, полный контроль.</p>
+        <span class="step-time" data-i18n="hs2t">⏱ 5–10 минут</span>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <h3 data-i18n="hs3h">Кнопка в шапке</h3>
+        <p data-i18n="hs3p">Закрепите кнопку одним нажатием — готово. Канал стал каталогом, архив снова работает.</p>
+        <span class="step-time" data-i18n="hs3t">⏱ 1 минута</span>
+      </div>
+    </div>
+    <div class="steps-note reveal" data-i18n="how_note">Не хотите возиться с настройкой? <b>Подписка</b> ($5.90/мес, 7 дней бесплатно; год сразу — $59, 2 месяца в подарок): настраивать нечего — бот сам соберёт каталог из вашего канала, от вас вообще ничего не нужно. <b>«Установим вместе»</b> ($69): помощник берёт на себя все удалённые шаги — вам остаются только личные. <b>«Премиум»</b> ($95): вы вообще ничего не делаете — установлю лично, от ссылки на канал до готовой кнопки.</div>
+  </div>
+</section>
+
+<!-- ═══ ЖИВАЯ СТАТИСТИКА (v1.7.30: цифры публикует бот в stats.json) ═══ -->
+<section class="section" id="live" hidden style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal sec-center">
+      <div class="sec-tag" data-i18n="live_tag">📡 Живая статистика</div>
+      <h2 class="sec-title" data-i18n="live_title">Каталогом уже пользуются</h2>
+      <p class="sec-sub" data-i18n="live_sub">Цифры выгружает сам бот (раз в час): только общие суммы — без имён каналов и каких-либо личных данных.</p>
+    </div>
+    <div class="live-grid reveal">
+      <div class="live-card"><div class="live-num" id="lvCh">—</div><div class="live-cap" data-i18n="live_ch">каналов в обслуживании</div></div>
+      <div class="live-card"><div class="live-num" id="lvTot">—</div><div class="live-cap" data-i18n="live_tot">открытий каталогов всего</div></div>
+      <div class="live-card"><div class="live-num" id="lvO30">—</div><div class="live-cap" data-i18n="live_o30">открытий за 30 дней</div></div>
+      <div class="live-card"><div class="live-num" id="lvU30">—</div><div class="live-cap" data-i18n="live_u30">уникальных гостей за 30 дней</div></div>
+    </div>
+    <p class="live-note reveal" data-i18n="live_note">Счётчик считает только открытия страницы-оглавления — без трекинга личностей: на сервере от браузерного id остаётся лишь обезличенный хвост хэша.</p>
+  </div>
+</section>
+
+<!-- ═══ ТАРИФЫ ═══ -->
+<section class="section" id="pricing" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal sec-center">
+      <div class="sec-tag" data-i18n="pr_tag">Тарифы</div>
+      <h2 class="sec-title" data-i18n="pr_title">Выберите свой вариант запуска</h2>
+      <p class="sec-sub" data-i18n="pr_sub">Лицензия на 1 канал · обновления v1.x бесплатно · 14 дней на возврат</p>
+    </div>
+    <div class="price-grid">
+      <div class="price reveal">
+        <div class="price-val" data-i18n="pr1v">$31.50</div>
+        <div class="price-per" data-i18n="pr1p">разовый платёж</div>
+        <ul class="price-feats">
+          <li data-i18n="pr1f1">Архив с исходным кодом</li>
+          <li data-i18n="pr1f2">PDF-руководство (14 страниц)</li>
+          <li data-i18n="pr1f3">GitHub Actions-скрипты сборки</li>
+          <li data-i18n="pr1f4">Бесплатные обновления v1.x</li>
+          <li data-i18n="pr1f5">Хостинг на GitHub Pages — 0 ₽</li>
+          <li class="no" data-i18n="pr1f6">Без сопровождения</li>
+        </ul>
+        <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="pr_btn">Выбрать</a>
+      </div>
+      <div class="price hot reveal">
+        <div class="hot-badge" data-i18n="pr_hot">🔥 Самый простой старт</div>
+        <div class="price-val" data-i18n="pr2v">$5.90 <small>/ мес</small></div>
+        <div class="price-per" data-i18n="pr2p">первые 7 дней — бесплатно</div>
+        <div class="year-badge" data-i18n="pr2y">При оплате за год, 2 месяца в подарок</div>
+        <ul class="price-feats">
+          <li data-i18n="pr2f9"><b>Оплата только после результата</b> — сначала получаете настроенное Оглавление, потом платите</li>
+          <li data-i18n="pr2f1">Ноль настроек — бот сам собирает каталог из вашего канала</li>
+          <li data-i18n="pr2f2">Личный кабинет и история покупок</li>
+          <li data-i18n="pr2f3">Обновления и поддержка сразу</li>
+          <li data-i18n="pr2f8">Пост о боте в вашем канале — ваша реферальная ссылка приносит бесплатные месяцы</li>
+          <li data-i18n="pr2f4">Отмена в любой момент</li>
+          <li data-i18n="pr2f5">Оплата: Stars или картой/СБП</li>
+          <li data-i18n="pr2f6">Без привязки карты</li>
+        </ul>
+        <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="pr2btn">Начать бесплатно</a>
+      </div>
+      <div class="price reveal">
+        <div class="price-val" data-i18n="pr3v">$69</div>
+        <div class="price-per" data-i18n="pr3p">разовый платёж · делаем при вас</div>
+        <ul class="price-feats">
+          <li data-i18n="pr3f1">Всё из тарифа «Самостоятельно»</li>
+          <li data-i18n="pr3f2">Установка при вас за ~20 минут</li>
+          <li data-i18n="pr3f3">Консультант до готовой кнопки</li>
+          <li data-i18n="pr3f4">Настройка рубрик и шапки каталога</li>
+          <li data-i18n="pr3f5">Гарантия результата</li>
+        </ul>
+        <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="pr_btn">Выбрать</a>
+      </div>
+      <div class="price reveal">
+        <div class="price-val" data-i18n="pr4v">$95</div>
+        <div class="price-per" data-i18n="pr4p">разовый платёж · без вашего участия</div>
+        <ul class="price-feats">
+          <li data-i18n="pr4f1">Всё из тарифа «Установим вместе»</li>
+          <li data-i18n="pr4f2">Установлю лично — ноль шагов с вашей стороны</li>
+          <li data-i18n="pr4f3">От ссылки на канал до готовой кнопки</li>
+          <li data-i18n="pr4f4">Свяжусь в течение часа после оплаты</li>
+          <li data-i18n="pr4f5">Возврат: комплект в течение 14 дней</li>
+        </ul>
+        <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="pr_btn">Выбрать</a>
+      </div>
+    </div>
+    <p class="price-note reveal" data-i18n="pr_note">Оплата в боте <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" style="color:#1180C4;text-decoration:none;font-weight:700">@oglavlenie_shop_bot</a>: <b>Telegram Stars или банковской картой/СБП</b> · возврат в течение 14 дней (на тарифах с установкой — на сумму комплекта)</p>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="section" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal sec-center">
+      <div class="sec-tag" data-i18n="faq_tag">FAQ</div>
+      <h2 class="sec-title" data-i18n="faq_title">Частые вопросы</h2>
+    </div>
+    <div class="faq reveal">
+      <details class="faq-item" open>
+        <summary class="faq-q" data-i18n="q1t">Нужен ли сервер или платный хостинг?</summary>
+        <div class="faq-a" data-i18n="q1a">Нет. Каталог работает на бесплатном GitHub Pages — никаких ежемесячных платежей и серверов. Код и данные лежат в вашем собственном GitHub-репозитории: полный контроль, ничего стороннего.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q" data-i18n="q2t">Сколько времени занимает настройка?</summary>
+        <div class="faq-a" data-i18n="q2a">Самостоятельно — 15–30 минут по инструкции. «Установим вместе» — около 20 минут при вас, до готовой кнопки. «Премиум» — вы не делаете ни шага: установку ведёт продавец. На подписке бот собирает каталог сам — от вас вообще ничего не нужно.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q" data-i18n="q3t">Где хранятся мои данные?</summary>
+        <div class="faq-a" data-i18n="q3a">В вашем GitHub-репозитории. Это ваш код и ваш контент — вы в любой момент можете посмотреть, скачать или перенести их. Мы не держим ваш архив на чужих серверах.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q" data-i18n="q4t">Подойдёт для канала любого размера?</summary>
+        <div class="faq-a" data-i18n="q4a">Да. Каталог строится автоматически из экспорта: и для ста постов, и для нескольких тысяч. Рубрики, месяцы и форматы определяются сами, а поиск работает мгновенно.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q" data-i18n="q5t">Как обновлять каталог?</summary>
+        <div class="faq-a" data-i18n="q5a">Просто редактируйте канал как обычно. При следующей сборке — или автоматически через GitHub Actions — каталог подхватит изменения. Обновления v1.x бесплатны для всех тарифов.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q" data-i18n="q6t">Как оплатить и можно ли вернуть деньги?</summary>
+        <div class="faq-a" data-i18n="q6a">Оплата в боте @oglavlenie_shop_bot: Telegram Stars или банковская карта/СБП. Годовой пакет — $59 (2 месяца в подарок). Подписка отменяется в любой момент. Возврат — в течение 14 дней; на тарифах с установкой возвращается стоимость комплекта.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ФИНАЛЬНЫЙ CTA ═══ -->
+<section class="section" style="padding-top:0;padding-bottom:0">
+  <div class="wrap">
+    <div class="final reveal">
+      <h2 data-i18n="fin_h">Верните архиву силу продаж</h2>
+      <p data-i18n="fin_p">Запустите «Оглавление» сегодня — кнопка в шапке уже завтра.</p>
+      <div class="final-actions">
+        <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-i18n="fin_b1">🚀 Запустить в боте</a>
+        <a href="https://t.me/newsmydemobot/toc" target="_blank" rel="noopener" class="btn btn-ghost btn-lg" data-i18n="fin_b2" data-demo-link>▶️ Посмотреть демо</a>
+      </div>
+      <div class="demo-mini" data-i18n="fin_demo">Демо на английском: <a href="https://t.me/newsmydemobot/toc_en" target="_blank" rel="noopener">@newsmydemobot/toc_en</a> · вопросы — ИИ-консультанту в боте, он на связи 24/7</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ФУТЕР ═══ -->
+<footer>
+  <div class="wrap foot-inner">
+    <a class="logo" href="#top" style="font-size:15px"><span class="logo-ico" style="width:30px;height:30px;font-size:15px">📑</span> <span data-i18n="brand">Оглавление</span></a>
+    <div class="foot-links">
+      <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" data-i18n="foot_bot">Бот</a>
+      <a href="https://t.me/newsmydemobot/toc" target="_blank" rel="noopener" data-i18n="foot_dr">Демо RU</a>
+      <a href="https://t.me/newsmydemobot/toc_en" target="_blank" rel="noopener" data-i18n="foot_de">Демо EN</a>
+      <a href="#pricing" data-i18n="foot_pr">Тарифы</a>
+      <a href="#faq" data-i18n="foot_faq">FAQ</a>
+    </div>
+    <div class="foot-copy" data-i18n="foot_copy">© 2026 Оглавление · Telegram Mini App · хостинг GitHub Pages</div>
+  </div>
+</footer>
+
+<script>
+'use strict';
+// ── i18n: таблица [ключ, RU, EN] ───────────────────
+const STR=[
+["brand",`Оглавление`,`Oglavlenie`],
+["nav_pain",`Проблема`,`The problem`],
+["nav_sol",`Решение`,`The solution`],
+["nav_feat",`Возможности`,`Features`],
+["nav_who",`Кому подходит`,`Who it's for`],
+["nav_how",`Запуск`,`Launch`],
+["nav_pr",`Тарифы`,`Pricing`],
+["nav_faq",`FAQ`,`FAQ`],
+["nav_cta",`🚀 Запустить в боте`,`🚀 Open the bot`],
+["hero_pill",`TELEGRAM MINI APP · БЕЗ СЕРВЕРОВ И ПЛАТНОГО ХОСТИНГА`,`TELEGRAM MINI APP · NO SERVERS, NO HOSTING BILLS`],
+["hero_h1",`Лучшие посты канала <span class="grad-text">никто не видит</span>`,`Nobody sees <span class="grad-text">your channel's best posts</span>`],
+["hero_sub",`«Оглавление» превращает Telegram-канал в <b>каталог с поиском</b>: кнопка прямо в шапке, подписчик находит нужное за <b>5 секунд</b> вместо 10 минут прокрутки — а старый контент снова продаёт.`,`Oglavlenie turns a Telegram channel into a <b>searchable catalog</b>: a button right in the header, subscribers find what they need in <b>5 seconds</b> instead of 10 minutes of scrolling — and old content starts selling again.`],
+["hero_demo",`📲 Открыть живое демо`,`📲 Open the live demo`],
+["hero_order",`🚀 Заказать в боте`,`🚀 Get it in the bot`],
+["st1n",`5 мин`,`5 min`],
+["st1c",`на подписке — бот собирает каталог сам`,`on subscription — the bot assembles it for you`],
+["st2n",`0 ₽`,`$0`],
+["st2c",`хостинг — живёт на GitHub Pages`,`hosting lives on GitHub Pages`],
+["st3n",`5 режимов`,`5 modes`],
+["st3c",`поиск по всему архиву`,`search across the whole archive`],
+["st4c",`два языка интерфейса`,`two interface languages`],
+["ph_name",`Кулинарный клуб`,`Cooking Club`],
+["ph_status",`● 12 400 подписчиков`,`● 12,400 subscribers`],
+["ph_pin_t",`Оглавление`,`Table of Contents`],
+["ph_pin_s",`каталог канала · 482 поста`,`channel catalog · 482 posts`],
+["ph_m1",`Новый рецепт: борщ по-домашнему 🥣`,`New recipe: homemade borscht 🥣`],
+["ph_m2",`Подборка специй — сохраните!`,`Spice selection — save it!`],
+["ph_m3",`Мастер-класс в субботу 🎓`,`Master class on Saturday 🎓`],
+["ph_ma_t",`Оглавление`,`Table of Contents`],
+["ph_chip1",`Рубрики`,`Topics`],
+["ph_chip2",`Месяцы`,`Months`],
+["ph_chip3",`Алфавит`,`A–Z`],
+["ph_chip4",`Форматы`,`Formats`],
+["ph_c1t",`Борщ по-домашнему — пошагово`,`Homemade borscht — step by step`],
+["ph_c1m",`Рецепты · 12 марта`,`Recipes · Mar 12`],
+["ph_c1g",`Рецепт`,`Recipe`],
+["ph_c2t",`Мастер-класс: 5 базовых соусов`,`Master class: 5 basic sauces`],
+["ph_c2m",`Видео · 28 февраля`,`Video · Feb 28`],
+["ph_c2g",`Видео`,`Video`],
+["ph_c3t",`Гид по специям: что с чем сочетать`,`Spice guide: what pairs with what`],
+["ph_c3m",`Гайд · 9 февраля`,`Guide · Feb 9`],
+["ph_c3g",`Гайд`,`Guide`],
+["ph_note",`👆 Так это видит подписчик: <b>кнопка в шапке</b> → каталог с поиском`,`👆 This is what a subscriber sees: <b>a button in the header</b> → a catalog with search`],
+["mq1",`📂 Рубрики`,`📂 Topics`],
+["mq2",`📅 Месяцы`,`📅 Months`],
+["mq3",`🔤 Алфавит`,`🔤 A–Z`],
+["mq4",`📄 Форматы`,`📄 Formats`],
+["mq5",`🔍 Поиск`,`🔍 Search`],
+["mq6",`0 ₽ хостинг навсегда`,`$0 hosting forever`],
+["mq7",`Обновления v1.x бесплатно`,`v1.x updates free`],
+["mq8",`14 дней на возврат`,`14-day money-back`],
+["mq9",`RU / EN`,`RU / EN`],
+["mq10",`Год сразу — 2 месяца в подарок`,`Year upfront — 2 months free`],
+["pain_tag",`Проблема`,`The problem`],
+["pain_title",`Почему канал перестаёт продавать,<br>даже когда контент отличный`,`Why your channel stops selling,<br>even when the content is great`],
+["pain_sub",`Telegram-канал — это витрина вашего дела. Но у ленты есть физика, которая работает против вас. Вот что происходит с каждым постом.`,`A Telegram channel is the storefront of your business. But the way a feed works plays against you. Here is what happens to every post.`],
+["pc1h",`Пост умирает за 48 часов`,`A post dies within 48 hours`],
+["pc1p",`Лента — конвейер: свежий пост вытесняет предыдущий. Через два дня ваш мастер-класс, обзор или прайс не видит уже никто — кроме тех, кто готов листать сотни сообщений вниз. Неделя труда живёт два дня и уходит в архив, который никто не открывает.`,`The feed is a conveyor: a fresh post pushes out the previous one. Two days later your master class, review or price list is seen by no one — except those willing to scroll hundreds of messages. A week of work lives for two days and sinks into an archive nobody opens.`],
+["pc2h",`Поиск Telegram не ищет по каналу`,`Telegram search can't search a channel`],
+["pc2p",`Встроенный поиск находит сообщения по точным словам и часто теряет медиа и подписи. Клиент помнит: «у вас же было про это» — и не находит. Он не станет листать 400 постов. Он просто уйдёт туда, где искать удобно.`,`The built-in search finds messages by exact words and often misses media and captions. A client remembers: “you had something about this” — and finds nothing. They won't scroll 400 posts. They simply leave to where searching is easy.`],
+["pc3h",`Один закреп не может быть витриной`,`One pinned post can't be a storefront`],
+["pc3p",`Закреп один — а товаров, гайдов и услуг десятки. Обновлять его бесконечно нельзя, а список из двадцати ссылок в закрепе никто не читает. У каждого магазина есть витрина и указатели — у вашего канала, по сути, нет ничего.`,`There is one pinned slot — but dozens of products, guides and services. You can't keep re-updating it, and nobody reads a list of twenty links. Every shop has a storefront and aisle signs — your channel, in essence, has nothing.`],
+["pc4h",`Личка горит, админ выгорает`,`DMs pile up, the admin burns out`],
+["pc4p",`«А где смотреть?», «скиньте прайс», «было же что-то про это» — одни и те же вопросы по 20 раз в день. Каждый ручной ответ — минуты времени. А клиент, который не дождался, — это уже не минута, это потерянные деньги.`,`“Where do I look?”, “send the price list”, “you had something about that” — the same questions 20 times a day. Every manual answer costs minutes. And a client who didn't wait is no longer minutes — it's lost money.`],
+["pain_b",`80–90% ценности канала — в архиве.`,`80–90% of a channel's value sits in its archive.`],
+["pain_s",`Сейчас этот архив не работает ни дня: новые посты видят все, старые — никто. Вы платите за рекламу новых постов, а ценность старых сгорает каждый день.`,`Right now that archive works zero days: new posts are seen by everyone, old ones by no one. You pay to advertise the new posts while the value of the old ones burns away every day.`],
+["sol_tag",`Решение`,`The solution`],
+["sol_title",`Что меняет одна кнопка в шапке`,`What a single header button changes`],
+["sol_sub",`«Оглавление» — мини-приложение, которое живёт прямо в вашем канале. Смотрите, как меняется путь клиента.`,`Oglavlenie is a mini-app that lives right inside your channel. See how the customer's journey changes.`],
+["cb_bad",`Сейчас`,`Right now`],
+["cb_t",`≈ 10 минут`,`≈ 10 minutes`],
+["cb1b",`Гость заходит в канал`,`A visitor opens the channel`],
+["cb1s",`и видит бесконечную простыню постов`,`and sees an endless wall of posts`],
+["cb2b",`Пытается что-то найти`,`Tries to find something`],
+["cb2s",`листает, ищет глазами, сдаётся`,`scrolls, scans with their eyes, gives up`],
+["cb3b",`Спрашивает в личке`,`Asks in direct messages`],
+["cb3s",`«а где у вас…?» — и ждёт ответа`,`“where do you keep…?” — and waits for an answer`],
+["cb4b",`Не дожидается — уходит`,`Doesn't wait — leaves`],
+["cb4s",`к конкуренту, у которого всё «на виду»`,`to a competitor whose content is “right there”`],
+["cg_bad",`С «Оглавлением»`,`With Oglavlenie`],
+["cg_t",`≈ 5 секунд`,`≈ 5 seconds`],
+["cg1b",`Жмёт кнопку в шапке канала`,`Taps the button in the header`],
+["cg1s",`«📑 Оглавление» — всегда на виду`,`“📑 Table of Contents” — always in view`],
+["cg2b",`Выбирает рубрику или ищет словами`,`Picks a topic or searches by words`],
+["cg2s",`категории, месяцы, форматы, мгновенный поиск`,`topics, months, formats, instant search`],
+["cg3b",`Открывает нужный пост`,`Opens the right post`],
+["cg3s",`прямо в Telegram, без переходов на сайт`,`right in Telegram, no external sites`],
+["cg4b",`Покупает, записывается, подписывается`,`Buys, books, subscribes`],
+["cg4s",`архив снова работает на вас`,`the archive works for you again`],
+["ft_tag",`Возможности`,`Features`],
+["ft_title",`Каталог, который собирается<br>и обновляется сам`,`A catalog that builds<br>and updates itself`],
+["ft_sub",`Никакой рутины: бот раскладывает архив по полочкам, GitHub Pages бесплатно хранит его, а кнопка в шапке открывает в один тап.`,`No routine: the bot sorts your archive onto shelves, GitHub Pages hosts it for free, and the header button opens it in one tap.`],
+["f1h",`Кнопка в шапке канала`,`A button in the channel header`],
+["f1p",`Закреплённая кнопка «Оглавление» всегда перед глазами каждого подписчика. Один тап — и весь канал как на ладони: посты, рубрики, материалы. Не нужно никуда переходить — всё живёт внутри Telegram.`,`The pinned “Table of Contents” button is in front of every subscriber's eyes. One tap — and the whole channel is in plain sight: posts, topics, materials. No external links — everything lives inside Telegram.`],
+["f_bv",`📑 Оглавление <small>каталог канала ›</small>`,`📑 Table of Contents <small>channel catalog ›</small>`],
+["f_hint",`выглядит и работает вот так — попробуйте в демо`,`this is how it looks and works — try it in the demo`],
+["f2h",`5 режимов навигации`,`5 navigation modes`],
+["f2p",`Любой материал находится привычным способом — как в настоящем каталоге.`,`Every item is found the familiar way — like in a real catalog.`],
+["f_ch1",`📂 Рубрики`,`📂 Topics`],
+["f_ch2",`📅 Месяцы`,`📅 Months`],
+["f_ch3",`🔤 Алфавит`,`🔤 A–Z`],
+["f_ch4",`📄 Форматы`,`📄 Formats`],
+["f_ch5",`🔍 Поиск`,`🔍 Search`],
+["f3h",`Обновляется автоматически`,`Updates automatically`],
+["f3p",`Отредактировали пост или добавили новый — каталог пересобирается сам через GitHub Actions. Ноль ручной работы.`,`Edit a post or add a new one — the catalog rebuilds itself via GitHub Actions. Zero manual work.`],
+["f_num",`0 ₽`,`$0`],
+["f4h",`Хостинг — навсегда бесплатно`,`Free hosting forever`],
+["f4p",`Каталог живёт на GitHub Pages в вашем собственном репозитории. Никаких серверов, никаких ежемесячных платежей.`,`The catalog lives on GitHub Pages in your own repository. No servers, no monthly bills.`],
+["f5h",`Russian / English`,`Russian / English`],
+["f5p",`Интерфейс и каталог на двух языках — для каналов с международной аудиторией.`,`Interface and catalog in two languages — for channels with an international audience.`],
+["f6h",`ИИ-консультант установит за вас`,`An AI assistant sets it up for you`],
+["f6p",`В боте @oglavlenie_shop_bot живёт ассистент: проводит установку по шагам, отвечает на вопросы 24/7, а на тарифе «Установим вместе» — доводит до готовой кнопки вместе с вами. Личный кабинет, история покупок и реферальная программа — внутри бота.`,`An assistant lives inside @oglavlenie_shop_bot: it walks you through setup step by step and answers questions 24/7 — and on the “Done Together” plan it brings you all the way to a working button. Your personal account, purchase history and the referral program are all inside the bot.`],
+["how_tag",`Запуск`,`Launch`],
+["how_title",`Три шага до кнопки в шапке`,`Three steps to a button in the header`],
+["how_sub",`Это путь тарифа «Самостоятельно»: делаете всё сами по инструкции — без помощи Мастера. На «Установим вместе» и «Премиум» всем этим заниматься не нужно: всё сделаем за вас.`,`This is the DIY plan: you do everything yourself with the guide — no Master assistance. On “Done Together” and “Premium” you skip all of it: we do it for you.`],
+["hs1h",`Экспорт канала`,`Export the channel`],
+["hs1p",`В Telegram Desktop: «…» → Экспорт канала, формат JSON. Дальше инструкция ведёт по шагам, с картинками.`,`In Telegram Desktop: “…” → Export chat history, JSON format. From there, the guide walks you through step by step, with screenshots.`],
+["hs1t",`⏱ 2 минуты`,`⏱ 2 minutes`],
+["hs2h",`Комплект в ваш GitHub`,`The kit goes to your GitHub`],
+["hs2p",`Загрузите файлы в свой репозиторий по инструкции — каталог соберётся автоматически. Свой код, свой репозиторий, полный контроль.`,`Upload the files to your repository following the guide — the catalog builds automatically. Your own code, your own repo, full control.`],
+["hs2t",`⏱ 5–10 минут`,`⏱ 5–10 minutes`],
+["hs3h",`Кнопка в шапке`,`Pin the button`],
+["hs3p",`Закрепите кнопку одним нажатием — готово. Канал стал каталогом, архив снова работает.`,`Pin the button with one tap — done. The channel is now a catalog, and the archive works again.`],
+["hs3t",`⏱ 1 минута`,`⏱ 1 minute`],
+["how_note",`Не хотите возиться с настройкой? <b>Подписка</b> ($5.90/мес, 7 дней бесплатно; год сразу — $59, 2 месяца в подарок): настраивать нечего — бот сам соберёт каталог из вашего канала, от вас вообще ничего не нужно. <b>«Установим вместе»</b> ($69): Мастер берёт на себя все удалённые шаги — вам остаются только личные. <b>«Премиум»</b> ($95): вы вообще ничего не делаете — установлю лично, от ссылки на канал до готовой кнопки.`,`Don't want the hassle? <b>Subscription</b> ($5.90/mo, 7 days free; a year upfront — $59, 2 months free): there's nothing to set up — the bot assembles the catalog from your channel on its own, you do nothing at all. <b>“Done Together”</b> ($69): the Master takes care of every remote step — you keep just the personal ones. <b>“Premium”</b> ($95): you do nothing at all — I install it personally, from a channel link to a working button.`],
+["who_tag",`Кому подходит`,`Who it's for`],
+["who_title",`Разные каналы — разная боль`,`Different channels — different pains`],
+["who_sub",`Продающему каналу нужна витрина, писателю — порядок глав, эксперту — программа курса. Найдите себя: под каждой задачей «Оглавление» работает по-своему.`,`A shop needs a storefront, a writer — chapter order, an expert — a course plan. Find yourself: Oglavlenie works its own way for each of these jobs.`],
+["who_l1",`Боль`,`The pain`],
+["who_l2",`С оглавлением`,`With the catalog`],
+["w1h",`Продающие каналы и магазины`,`Selling channels & shops`],
+["w1p",`Товары, прайс и условия теряются в ленте: клиент видит последний пост — и не догадывается, что за плечами сотни позиций. Каждый «сколько стоит?» приходится отрабатывать вручную в личке.`,`Products, prices and terms drown in the feed: a visitor sees the latest post and never guesses there are hundreds of items behind it. Every “how much?” has to be handled by hand in DMs.`],
+["w1f",`Каталог становится витриной: рубрики по категориям, поиск по названию, товар в два тапа. Прайс больше не пересылают — его открывают.`,`The catalog becomes a storefront: topics by category, search by name, any item two taps away. Nobody forwards the price list anymore — they simply open it.`],
+["w2h",`Блогеры и авторские каналы`,`Bloggers & personal brands`],
+["w2p",`Вы пишете годами, а новый подписчик видит последние десять постов. Лучшие тексты, за которые вы когда-то получали охваты, навсегда спрятаны в глубине ленты.`,`You've been writing for years, yet a new follower sees the last ten posts. Your best texts — the ones that once brought reach — are buried deep in the feed forever.`],
+["w2f",`Лучшее всегда на виду: подборка рубрик становится входом для новых подписчиков. Старые тексты снова читают — и подписываются уже на вас.`,`The best work stays in plain sight: the topic list becomes the entry point for new followers. Old posts get read again — and people subscribe to you.`],
+["w3h",`Писатели и авторы серий`,`Writers & serial authors`],
+["w3p",`Роман по главам, цикл статей, лонгрид из шести частей — читатель теряется между частями и бросает на середине. Telegram не умеет показывать «глава 1 из 12».`,`A novel chapter by chapter, an article series, a six-part longread — readers get lost between parts and quit halfway. Telegram can't show “chapter 1 of 12”.`],
+["w3f",`У каждой серии своё оглавление: главы в порядке чтения, навигация по месяцам и алфавиту. Читатель открывает следующую главу, а не ищет её по ленте.`,`Every series gets a real table of contents: chapters in reading order, navigation by months and A–Z. The reader opens the next chapter instead of hunting through the feed.`],
+["w4h",`Обучение и эксперты`,`Educators & experts`],
+["w4p",`Уроки, разборы и мастер-классы выходят неделями — и рассыпаются по ленте. Ученик не видит программу целиком и не доходит до результата, ради которого приходил.`,`Lessons, breakdowns and master classes come out over weeks — and scatter across the feed. Students never see the whole program and don't reach the result they came for.`],
+["w4f",`Каталог превращается в программу: модули в порядке прохождения, материалы по форматам. Ученик видит весь путь — и доходит до конца.`,`The catalog becomes the curriculum: modules in learning order, materials by format. Students see the entire path — and finish it.`],
+["w5h",`Услуги и фриланс`,`Services & freelancers`],
+["w5p",`Кейсы, отзывы, этапы работы и цены — всё в одном закрепе, который давно не переписывался. Каждое «а покажите ваши работы?» — это экскурсия вручную.`,`Cases, reviews, process and prices — all squeezed into one pinned post last updated ages ago. Every “show me your work?” means a personal guided tour.`],
+["w5f",`Портфолио всегда под рукой: кейсы по рубрикам, отзывы и форматы отдельно. Клиент сам находит нужное ещё до первого сообщения вам.`,`A portfolio that's always at hand: cases by topic, reviews and formats in their own sections. Clients find what they need before even messaging you.`],
+["w6h",`Подборки и медиа`,`Curated lists & media`],
+["w6p",`Сотни ссылок, карточек и постов-ресурсов. Без поиска канал — склад: заходят по наводке, не находят нужного и уходят, чтобы не возвращаться.`,`Hundreds of links, cards and resource posts. Without search the channel is a warehouse: people come on a tip, find nothing and leave for good.`],
+["w6f",`Канал становится справочником: алфавит, форматы, мгновенный поиск. Подписчик возвращается сам — за нужным здесь и сейчас.`,`The channel becomes a reference: A–Z, formats, instant search. Subscribers come back on their own — for exactly what they need right now.`],
+["who_note",`Не нашли себя в списке? Рубрики, месяцы и форматы каталог определяет из вашего контента автоматически — он подстроится и под нишу, которой здесь нет.`,`Don't see yourself in the list? The catalog detects topics, months and formats from your content automatically — it will adapt to a niche that isn't even on this page.`],
+["pr_tag",`Тарифы`,`Pricing`],
+["pr_title",`Выберите свой вариант запуска`,`Choose how you launch`],
+["pr_sub",`Лицензия на 1 канал · обновления v1.x бесплатно · 14 дней на возврат`,`License for 1 channel · v1.x updates free · 14-day refund`],
+["pr1n",`📦 Самостоятельно`,`📦 DIY Setup`],
+["pr1v",`$31.50`,`$31.50`],
+["pr1p",`разовый платёж`,`one-time payment`],
+["pr1f1",`Архив с исходным кодом`,`Source code archive`],
+["pr1f2",`PDF-руководство (14 страниц)`,`PDF guide (14 pages)`],
+["pr1f3",`GitHub Actions-скрипты сборки`,`GitHub Actions build scripts`],
+["pr1f4",`Бесплатные обновления v1.x`,`Free v1.x updates`],
+["pr1f5",`Хостинг на GitHub Pages — 0 ₽`,`Hosting on GitHub Pages — $0`],
+["pr1f6",`Без сопровождения`,`No hand-holding`],
+["pr_btn",`Выбрать`,`Choose`],
+["pr_hot",`🔥 Самый простой старт`,`🔥 The easiest start`],
+["pr2n",`♾ Подписка`,`♾ Subscription`],
+["pr2v",`$5.90 <small>/ мес</small>`,`$5.90 <small>/ mo</small>`],
+["pr2p",`первые 7 дней — бесплатно`,`free for the first 7 days`],
+["pr2f1",`Ноль настроек — бот сам собирает каталог из вашего канала`,`Zero setup — the bot builds the catalog from your channel for you`],
+["pr2f2",`Личный кабинет и история покупок`,`Personal account and purchase history`],
+["pr2f3",`Обновления и поддержка сразу`,`Updates and support right away`],
+["pr2y",`При оплате за год, 2 месяца в подарок`,`Pay for a year upfront, get 2 months free`],
+["pr2f8",`Пост о боте в вашем канале — ваша реферальная ссылка приносит бесплатные месяцы`,`A post about the bot in your channel — your referral link earns free months`],
+["pr2f4",`Отмена в любой момент`,`Cancel anytime`],
+["pr2f5",`Оплата: Stars или картой/СБП`,`Pay in Stars or by card`],
+["pr2f6",`Без привязки карты`,`No card required`],
+["pr2f9",`<b>Оплата только после результата</b> — сначала получаете настроенное Оглавление, потом платите`,`<b>Pay only after the result</b> — you first get a fully set up Table of Contents, then you pay`],
+["pr2btn",`Начать бесплатно`,`Start free`],
+["pr3n",`🤝 Установим вместе`,`🤝 Done Together`],
+["pr3v",`$69`,`$69`],
+["pr3p",`разовый платёж · делаем при вас`,`one-time payment · we do it with you`],
+["pr3f1",`Всё из тарифа «Самостоятельно»`,`Everything in “DIY Setup”`],
+["pr3f2",`Установка при вас за ~20 минут`,`Set up together in ~20 minutes`],
+["pr3f3",`Консультант до готовой кнопки`,`A consultant until the button works`],
+["pr3f4",`Настройка рубрик и шапки каталога`,`Topics and header customization`],
+["pr3f5",`Гарантия результата`,`Result guaranteed`],
+["pr4n",`👑 Премиум «Установлю за тебя»`,`👑 Premium “Done for You”`],
+["pr4v",`$95`,`$95`],
+["pr4p",`разовый платёж · без вашего участия`,`one-time payment · zero effort on your side`],
+["pr4f1",`Всё из тарифа «Установим вместе»`,`Everything in “Done Together”`],
+["pr4f2",`Установлю лично — ноль шагов с вашей стороны`,`I install it personally — zero steps for you`],
+["pr4f3",`От ссылки на канал до готовой кнопки`,`From a channel link to a working button`],
+["pr4f4",`Свяжусь в течение часа после оплаты`,`I get in touch within an hour after payment`],
+["pr4f5",`Возврат: комплект в течение 14 дней`,`Refund: the kit within 14 days`],
+["pr_note",`Оплата в боте <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" style="color:#1180C4;text-decoration:none;font-weight:700">@oglavlenie_shop_bot</a>: <b>Telegram Stars или банковской картой/СБП</b> · возврат в течение 14 дней (на тарифах с установкой — на сумму комплекта)`,`Pay in the bot <a href="https://t.me/oglavlenie_shop_bot?start=site" target="_blank" rel="noopener" style="color:#1180C4;text-decoration:none;font-weight:700">@oglavlenie_shop_bot</a>: <b>Telegram Stars or a bank card</b> · 14-day refund (on plans that include installation, the kit amount is refunded)`],
+["faq_tag",`FAQ`,`FAQ`],
+["faq_title",`Частые вопросы`,`Frequently asked questions`],
+["q1t",`Нужен ли сервер или платный хостинг?`,`Do I need a server or paid hosting?`],
+["q1a",`Нет. Каталог работает на бесплатном GitHub Pages — никаких ежемесячных платежей и серверов. Код и данные лежат в вашем собственном GitHub-репозитории: полный контроль, ничего стороннего.`,`No. The catalog runs on free GitHub Pages — no monthly bills, no servers. Code and data live in your own GitHub repository: full control, nothing third-party.`],
+["q2t",`Сколько времени занимает настройка?`,`How long does setup take?`],
+["q2a",`Самостоятельно — 15–30 минут по инструкции. «Установим вместе» — около 20 минут вместе с вами, до готовой кнопки. «Премиум» — вы не делаете ни шага: установку ведёт продавец. На подписке бот собирает каталог сам — от вас вообще ничего не нужно.`,`DIY — 15–30 minutes with the guide. “Done Together” — about 20 minutes with you until the button works. “Premium” — you don't lift a finger: we install everything for you. On the subscription the bot builds the catalog itself — you do nothing at all.`],
+["q3t",`Где хранятся мои данные?`,`Where is my data stored?`],
+["q3a",`В вашем GitHub-репозитории. Это ваш код и ваш контент — вы в любой момент можете посмотреть, скачать или перенести их. Мы не держим ваш архив на чужих серверах.`,`In your own GitHub repository. It's your code and your content — view, download or move it anytime. We don't keep your archive on anyone else's servers.`],
+["q4t",`Подойдёт для канала любого размера?`,`Does it work for channels of any size?`],
+["q4a",`Да. Каталог строится автоматически из экспорта: и для ста постов, и для нескольких тысяч. Рубрики, месяцы и форматы определяются сами, а поиск работает мгновенно.`,`Yes. The catalog is built automatically from the export — whether you have a hundred posts or several thousand. Topics, months and formats are detected on their own, and search is instant.`],
+["q5t",`Как обновлять каталог?`,`How do I update the catalog?`],
+["q5a",`Просто редактируйте канал как обычно. При следующей сборке — или автоматически через GitHub Actions — каталог подхватит изменения. Обновления v1.x бесплатны для всех тарифов.`,`Just keep editing the channel as usual. On the next build — or automatically via GitHub Actions — the catalog picks up the changes. v1.x updates are free on every plan.`],
+["q6t",`Как оплатить и можно ли вернуть деньги?`,`How do I pay, and can I get a refund?`],
+["q6a",`Оплата в боте @oglavlenie_shop_bot: Telegram Stars или банковская карта/СБП. Годовой пакет — $59 (2 месяца в подарок). Подписка отменяется в любой момент. Возврат — в течение 14 дней; на тарифах с установкой возвращается стоимость комплекта.`,`Pay in the bot @oglavlenie_shop_bot: Telegram Stars or a bank card. The yearly package is $59 (2 months free). The subscription can be canceled anytime. Refunds are available within 14 days of purchase. On plans that include installation (“Done Together” and “Premium”), the refunded amount equals the price of the software kit.`],
+["fin_h",`Верните архиву силу продаж`,`Give your archive its selling power back`],
+["fin_p",`Запустите «Оглавление» сегодня — кнопка в шапке уже завтра.`,`Launch Oglavlenie today — the button in your header is there tomorrow.`],
+["fin_b1",`🚀 Запустить в боте`,`🚀 Launch in the bot`],
+["fin_b2",`▶️ Посмотреть демо`,`▶️ See the demo`],
+["fin_demo",`Демо на английском: <a href="https://t.me/newsmydemobot/toc_en" target="_blank" rel="noopener">@newsmydemobot/toc_en</a> · вопросы — ИИ-консультанту в боте, он на связи 24/7`,`Live demo: <a href="https://t.me/newsmydemobot/toc_en" target="_blank" rel="noopener">@newsmydemobot/toc_en</a> · questions — the AI consultant in the bot, online 24/7`],
+["vid_tag",`Видео`,`Video`],
+["vid_title",`Вся суть — в одном коротком видео`,`The whole idea in one short video`],
+["vid_sub",`Вертикальный обзор: как каталог выглядит и работает прямо в Telegram`,`A vertical walkthrough: what the catalog looks and feels like inside Telegram`],
+["vid_cta",`📲 Открыть живое демо`,`📲 Open the live demo`],
+["vid_note",`Сейчас показывается видео на русском — переключите язык страницы сверху, чтобы посмотреть английскую версию`,`This is the English video — switch the page language at the top to watch the Russian version`],
+["foot_bot",`Бот`,`Bot`],
+["foot_dr",`Демо RU`,`Demo RU`],
+["foot_de",`Демо EN`,`Demo EN`],
+["foot_pr",`Тарифы`,`Pricing`],
+["foot_faq",`FAQ`,`FAQ`],
+["foot_copy",`© 2026 Оглавление · Telegram Mini App · хостинг GitHub Pages`,`© 2026 Oglavlenie · Telegram Mini App · hosted on GitHub Pages`],
+["live_tag",`📡 Живая статистика`,`📡 Live stats`],
+["live_title",`Каталогом уже пользуются`,`The catalog is already in use`],
+["live_sub",`Цифры выгружает сам бот (раз в час): только общие суммы — без имён каналов и каких-либо личных данных.`,`The numbers are exported by the bot itself (once an hour): totals only — no channel names, no personal data.`],
+["live_ch",`каналов в обслуживании`,`channels under service`],
+["live_tot",`открытий каталогов всего`,`total catalog opens`],
+["live_o30",`открытий за 30 дней`,`opens in the last 30 days`],
+["live_u30",`уникальных гостей за 30 дней`,`unique visitors in 30 days`],
+["live_note",`Счётчик считает только открытия страницы-оглавления — без трекинга личностей: на сервере от браузерного id остаётся лишь обезличенный хвост хэша.`,`The counter only counts table-of-contents page opens — no person tracking: the browser id leaves just an anonymized hash tail on the server.`]
+];
+const I18N={ru:{},en:{}};
+for(const [k,ru,en] of STR){I18N.ru[k]=ru;I18N.en[k]=en;}
+I18N.ru.meta_title=`Оглавление — умный каталог для Telegram-канала прямо в шапке`;
+I18N.en.meta_title=`Oglavlenie — a smart catalog for your Telegram channel, right in the header`;
+I18N.ru.meta_desc=`Кнопка «Оглавление» в шапке канала: весь архив с поиском, рубриками, месяцами и форматами. Без серверов — бесплатно на GitHub Pages. Запуск от 5 минут.`;
+I18N.en.meta_desc=`A “Table of Contents” button in the channel header: the whole archive with search, topics, months and formats. No servers — free on GitHub Pages. Launch in 5 minutes.`;
+const TYPING_WORDS={
+  ru:[`соус`,`мастер-класс`,`гид по специям`,`видео`],
+  en:[`sauce`,`master class`,`spice guide`,`video`]
+};
+
+// ── выбор языка: localStorage → язык браузера → RU ─
+let LANG='ru';
+try{
+  const s=localStorage.getItem('toc_lang');
+  LANG=(s==='ru'||s==='en')?s:(((navigator.language||'').toLowerCase().startsWith('ru'))?'ru':'en');
+}catch(e){}
+
+let TYPING={w:0,c:0,del:false};
+function applyLang(l){
+  LANG=l;
+  try{localStorage.setItem('toc_lang',l)}catch(e){}
+  document.documentElement.lang=l;
+  document.title=I18N[l].meta_title;
+  const md=document.querySelector('meta[name="description"]');
+  if(md)md.setAttribute('content',I18N[l].meta_desc);
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const v=I18N[l][el.getAttribute('data-i18n')];
+    if(v!==undefined)el.innerHTML=v;
+  });
+  document.querySelectorAll('[data-demo-link]').forEach(a=>{
+    a.href=(l==='en')?'https://t.me/newsmydemobot/toc_en':'https://t.me/newsmydemobot/toc';
+  });
+  document.querySelectorAll('[data-video-link]').forEach(f=>{   // Task 181: шортсы RU/EN
+    f.src='https://www.youtube-nocookie.com/embed/'+((l==='en')?'q9ZUDx5lxlA':'N7CpbRabP5Q')+'?rel=0';
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    const on=b.dataset.lang===l;
+    b.classList.toggle('active',on);
+    b.setAttribute('aria-pressed',on?'true':'false');
+  });
+  TYPING={w:0,c:0,del:false};
+}
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+applyLang(LANG);
+
+// ── reveal при скролле ─────────────────────────────
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ── мобильное меню ─────────────────────────────────
+const burger=document.getElementById('burger'),mm=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>mm.classList.toggle('open'));
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));
+
+// ── печать в поиске мокапа (на языке страницы) ─────
+(function(){
+  const el=document.getElementById('typing');
+  function tick(){
+    const words=TYPING_WORDS[LANG]||TYPING_WORDS.ru;
+    const word=words[TYPING.w%words.length];
+    if(!TYPING.del){TYPING.c++;if(TYPING.c>=word.length){TYPING.del=true;el.textContent=word;setTimeout(tick,1600);return}}
+    else{TYPING.c--;if(TYPING.c<=0){TYPING.del=false;TYPING.w=(TYPING.w+1)%words.length}}
+    el.textContent=word.slice(0,TYPING.c);
+    setTimeout(tick,TYPING.del?40:110);
+  }
+  tick();
+})();
+
+// ── дублируем бегущую строку для бесшовности ──────
+(function(){
+  const t=document.getElementById('marqueeTrack');
+  t.innerHTML+=t.innerHTML;
+})();
+
+// ── живая статистика: stats.json публикует сам бот (v1.7.30) ──
+// Task 55 (4.11.2026): витрина переехала на oglavlenie.github.io, а бот продолжает
+// публиковать stats.json в СТАРОЕ репо eremeevmaks41-sys/oglavlenie (токен бота
+// пользовательский — в организацию его не пускают). Читаем через raw-зеркало:
+// raw.githubusercontent отдаёт CORS * (кеш ~5 мин при часовом интервал — не важно).
+// Блок показывается ТОЛЬКО когда каналов в обслуживании набралось 20+
+// (босс 1.11.2026: «появление когда каналов наберется штук 20» — нули и
+// единицы на витрине не продают). Файла нет / enabled:false / сеть легла /
+// меньше 20 — секция спрятана; на пороге раскроется сама, вручную включать
+// не нужно.
+(function(){
+  const wrap=document.getElementById('live');
+  if(!wrap)return;
+  fetch('https://raw.githubusercontent.com/eremeevmaks41-sys/oglavlenie/main/stats.json?ts='+Date.now(),{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw 0;return r.json();
+  }).then(function(d){
+    if(!d||d.enabled===false)throw 0;
+    if(!((d.ch&&d.ch.ch)>=20))throw 0;
+    const n=function(v){return String(v||0).replace(/\B(?=(\d{3})+(?!\d))/g,'\u2009');};
+    document.getElementById('lvCh').textContent=n(d.ch&&d.ch.ch);
+    document.getElementById('lvTot').textContent=n(d.opens&&d.opens.total);
+    document.getElementById('lvO30').textContent=n(d.opens&&d.opens.o30);
+    document.getElementById('lvU30').textContent=n(d.opens&&d.opens.u30);
+    wrap.hidden=false;
+  }).catch(function(){wrap.hidden=true;});
+})();
+</script>
+<!-- Attribution: сохраняем источник трафика (fb/ig/yt) во все deeplink-CTA бота + GA4-событие на клик -->
+<script>
+(function(){
+  var WHITELIST=['fb','ig','yt','site'];
+  var REF_MAP=[[/\bfacebook\.|fb\.me|fb\.watch/,'fb'],[/instagram\./,'ig'],[/youtube\.|youtu\.be/,'yt']];
+  function norm(v){v=(v||'').toLowerCase().trim();return WHITELIST.indexOf(v)>=0?v:'';}
+  function detect(){
+    var f=norm(new URLSearchParams(location.search).get('from'));
+    if(f)return f;
+    var ref=document.referrer||'';
+    for(var i=0;i<REF_MAP.length;i++){if(REF_MAP[i][0].test(ref))return REF_MAP[i][1];}
+    try{f=norm(sessionStorage.getItem('ogl_src'));}catch(e){}
+    return f||'site';
+  }
+  var SRC=detect();
+  try{sessionStorage.setItem('ogl_src',SRC);}catch(e){}
+  function rewrite(){
+    document.querySelectorAll('a[href*="start="]').forEach(function(a){
+      var h=a.getAttribute('href')||'';
+      if(h.indexOf('oglavlenie_shop_bot')<0)return;
+      a.setAttribute('href',h.replace(/start=[A-Za-z0-9_\-]*/,'start='+SRC));
+    });
+  }
+  rewrite();
+  document.addEventListener('click',function(e){
+    var t=e.target,a=t&&t.closest?t.closest('a[href*="start="]'):null;
+    if(!a||(a.getAttribute('href')||'').indexOf('oglavlenie_shop_bot')<0)return;
+    a.setAttribute('href',a.getAttribute('href').replace(/start=[A-Za-z0-9_\-]*/,'start='+SRC));
+    if(typeof gtag==='function')gtag('event','cta_click',{source:SRC});
+  },true);
+  new MutationObserver(rewrite).observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
+</body>
+</html>
