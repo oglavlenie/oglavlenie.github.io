@@ -803,6 +803,7 @@ footer{border-top:1px solid var(--stroke);margin-top:90px;padding:36px 0 44px}
         <a class="btn btn-primary btn-lg" href="https://t.me/oglavlenie_try_bot" target="_blank" rel="noopener" data-i18n="try_btn">🧪 Примерь на свой канал</a>
       </div>
     </div>
+    <div class="try-live" id="tryLive" hidden style="margin-top:14px;font-size:14.5px;color:#6b7280">🧪 <span id="tryLiveText"></span></div>
   </div>
 </section>
 
@@ -1175,6 +1176,7 @@ const STR=[
 ["live_o30",`открытий за 30 дней`,`opens in the last 30 days`],
 ["live_u30",`уникальных гостей за 30 дней`,`unique visitors in 30 days`],
 ["live_note",`Счётчик считает только открытия страницы-оглавления — без трекинга личностей: на сервере от браузерного id остаётся лишь обезличенный хвост хэша.`,`The counter only counts table-of-contents page opens — no person tracking: the browser id leaves just an anonymized hash tail on the server.`],
+["live_stats",`Демок собрано: <b>{n}</b> · открытий демо: <b>{m}</b>`,`Demos built: <b>{n}</b> · demo opens: <b>{m}</b>`],
 ["try_tag",`Бесплатно`,`Free`],
 ["try_title",`Примерь каталог на свой канал за минуту`,`Try the catalog on your own channel in a minute`],
 ["try_sub",`Пришли боту файл экспорта своего канала — через минуту увидишь оглавление именно своего канала. Без доступа к каналу, без регистрации, бесплатно.`,`Send the bot an export file of your channel — in a minute you'll see the table of contents of your own channel. No channel access, no sign-up, free.`],
@@ -1232,7 +1234,23 @@ function applyLang(l){
     b.setAttribute('aria-pressed',on?'true':'false');
   });
   TYPING={w:0,c:0,del:false};
+  if(typeof renderLive==='function')renderLive();
 }
+var LIVE_N=0,LIVE_O=0;
+function renderLive(){
+  var el=document.getElementById('tryLive');if(!el)return;
+  var row=null;for(var i=0;i<STR.length;i++){if(STR[i][0]==='live_stats'){row=STR[i];break;}}
+  if(!row)return;
+  var t=(LANG==='en'?row[2]:row[1]).replace('{n}',LIVE_N).replace('{m}',LIVE_O);
+  var tx=document.getElementById('tryLiveText');if(tx)tx.innerHTML=t;
+  el.hidden=!(LIVE_N>0);
+}
+(function(){
+  var SURL='https://eremeevmaks41-sys.github.io/soderzhanie-pages/demo/_stats.json';
+  fetch(SURL,{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(j){
+    if(j&&+j.demos_ever>0){LIVE_N=+j.demos_ever;LIVE_O=+j.opens||0;renderLive();}
+  }).catch(function(){});
+})();
 document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
 applyLang(LANG);
 
