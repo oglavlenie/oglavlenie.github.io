@@ -413,6 +413,15 @@ footer{border-top:1px solid var(--stroke);margin-top:90px;padding:36px 0 44px}
 .short-frame:hover{transform:translateY(-4px);box-shadow:0 30px 70px -24px rgba(13,42,80,.55),0 0 0 1px var(--stroke2)}
 .short-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .video-note{font-size:13px;color:var(--dim)}
+/* v1.7.41 · блок «Примерь на свой канал» */
+.try-grid{display:grid;grid-template-columns:1fr 264px;gap:18px;margin-top:28px;align-items:stretch}
+.try-grid .steps{margin-top:0}
+.try-qr{background:var(--card);border:1px solid var(--stroke);border-radius:var(--r-lg);padding:26px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;box-shadow:var(--shadow-sm)}
+.try-qr img{width:176px;height:176px;border-radius:20px;background:#fff;padding:10px;border:1px solid var(--stroke)}
+.try-qr-cap{font-size:13px;line-height:1.45;color:var(--muted)}
+.try-qr .btn{margin-top:2px}
+@media (max-width:960px){.try-grid{grid-template-columns:1fr}.try-qr{flex-direction:row;justify-content:flex-start;text-align:left}.try-qr .btn{margin-top:0}}
+@media (max-width:760px){.try-qr{flex-direction:column;align-items:center;text-align:center}}
 </style>
 </head>
 <body>
@@ -771,6 +780,29 @@ footer{border-top:1px solid var(--stroke);margin-top:90px;padding:36px 0 44px}
       <div class="live-card"><div class="live-num" id="lvU30">—</div><div class="live-cap" data-i18n="live_u30">уникальных гостей за 30 дней</div></div>
     </div>
     <p class="live-note reveal" data-i18n="live_note">Счётчик считает только открытия страницы-оглавления — без трекинга личностей: на сервере от браузерного id остаётся лишь обезличенный хвост хэша.</p>
+  </div>
+</section>
+
+<!-- ═══ ПРИМЕРКА ═══ -->
+<section class="section" id="tryon" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-tag" data-i18n="try_tag">Бесплатно</div>
+      <h2 class="sec-title" data-i18n="try_title">Примерь каталог на свой канал за минуту</h2>
+      <p class="sec-sub" data-i18n="try_sub">Пришли боту файл экспорта своего канала — через минуту увидишь оглавление именно своего канала. Без доступа к каналу, без регистрации, бесплатно.</p>
+    </div>
+    <div class="try-grid reveal">
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><h3 data-i18n="try1h">Экспорт без медиа</h3><p data-i18n="try1p">В Telegram Desktop: «…» → Экспорт истории чата → машинно-читаемый JSON. Медиа не нужны — оглавление про тексты и рубрики.</p><span class="step-time" data-i18n="try1t">⏱ 2 минуты</span></div>
+        <div class="step"><div class="step-num">2</div><h3 data-i18n="try2h">Пришли файл демо-боту</h3><p data-i18n="try2p">Открой <a href="https://t.me/oglavlenie_try_bot" target="_blank" rel="noopener">@oglavlenie_try_bot</a> и отправь result.json (или zip) — сборка запустится сама.</p><span class="step-time" data-i18n="try2t">⏱ 1 минута</span></div>
+        <div class="step"><div class="step-num">3</div><h3 data-i18n="try3h">Смотри своё</h3><p data-i18n="try3p">Через минуту — живое оглавление твоего канала: темы, месяцы, поиск. Понравится — подключим целиком.</p><span class="step-time" data-i18n="try3t">⏱ ссылка живёт 48 часов</span></div>
+      </div>
+      <div class="try-qr">
+        <img src="qr-tryon.png" alt="QR: демо-бот Оглавления" width="176" height="176" loading="lazy">
+        <div class="try-qr-cap" data-i18n="try_qr">Наведи камеру Telegram — откроется демо-бот</div>
+        <a class="btn btn-primary btn-lg" href="https://t.me/oglavlenie_try_bot" target="_blank" rel="noopener" data-i18n="try_btn">🧪 Примерь на свой канал</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1143,6 +1175,20 @@ const STR=[
 ["live_o30",`открытий за 30 дней`,`opens in the last 30 days`],
 ["live_u30",`уникальных гостей за 30 дней`,`unique visitors in 30 days`],
 ["live_note",`Счётчик считает только открытия страницы-оглавления — без трекинга личностей: на сервере от браузерного id остаётся лишь обезличенный хвост хэша.`,`The counter only counts table-of-contents page opens — no person tracking: the browser id leaves just an anonymized hash tail on the server.`]
+["try_tag",`Бесплатно`,`Free`],
+["try_title",`Примерь каталог на свой канал за минуту`,`Try the catalog on your own channel in a minute`],
+["try_sub",`Пришли боту файл экспорта своего канала — через минуту увидишь оглавление именно своего канала. Без доступа к каналу, без регистрации, бесплатно.`,`Send the bot an export file of your channel — in a minute you'll see the table of contents of your own channel. No channel access, no sign-up, free.`],
+["try1h",`Экспорт без медиа`,`Export without media`],
+["try1p",`В Telegram Desktop: «…» → Экспорт истории чата → машинно-читаемый JSON. Медиа не нужны — оглавление про тексты и рубрики.`,`In Telegram Desktop: "…" → Export chat history → machine-readable JSON. No media needed — the catalog is about texts and topics.`],
+["try1t",`⏱ 2 минуты`,`⏱ 2 minutes`],
+["try2h",`Пришли файл демо-боту`,`Send the file to the demo bot`],
+["try2p",`Открой <a href="https://t.me/oglavlenie_try_bot" target="_blank" rel="noopener">@oglavlenie_try_bot</a> и отправь result.json (или zip) — сборка запустится сама.`,`Open <a href="https://t.me/oglavlenie_try_bot" target="_blank" rel="noopener">@oglavlenie_try_bot</a> and send result.json (or zip) — the build starts by itself.`],
+["try2t",`⏱ 1 минута`,`⏱ 1 minute`],
+["try3h",`Смотри своё`,`See your own`],
+["try3p",`Через минуту — живое оглавление твоего канала: темы, месяцы, поиск. Понравится — подключим целиком.`,`In a minute — a live table of contents of your channel: topics, months, search. Like it — we'll connect the full one.`],
+["try3t",`⏱ ссылка живёт 48 часов`,`⏱ the link lives for 48 hours`],
+["try_qr",`Наведи камеру Telegram — откроется демо-бот`,`Point the Telegram camera — the demo bot opens`],
+["try_btn",`🧪 Примерь на свой канал`,`🧪 Try it on your channel`],
 ];
 const I18N={ru:{},en:{}};
 for(const [k,ru,en] of STR){I18N.ru[k]=ru;I18N.en[k]=en;}
