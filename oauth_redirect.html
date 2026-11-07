@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="https://oglavlenie.github.io/favicon.svg">
+<title>Oglavlenie Publisher — OAuth redirect</title>
+<style>
+body{font-family:-apple-system,system-ui,"Segoe UI",Roboto,sans-serif;max-width:640px;margin:48px auto;padding:0 20px;line-height:1.65;color:#111;background:#fff}
+h1{font-size:1.3em}a{color:#2563eb}
+.box{margin:1em 0;padding:1em;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb}
+textarea{width:100%;box-sizing:border-box;font-family:monospace;font-size:14px;padding:8px;border:1px solid #d1d5db;border-radius:6px;min-height:84px}
+button{background:#2563eb;color:#fff;border:none;border-radius:6px;padding:10px 18px;font-size:15px;cursor:pointer}
+code{background:#f3f4f6;padding:2px 6px;border-radius:4px}
+footer{margin-top:2.5em;padding-top:1em;border-top:1px solid #e5e7eb;font-size:.9em;color:#555}
+</style>
+</head>
+<body>
+<h1>Oglavlenie Publisher — авторизация TikTok / TikTok authorization</h1>
+<div id="content"></div>
+<footer>© 2026 Oglavlenie · <a href="https://oglavlenie.github.io/">oglavlenie.github.io</a></footer>
+<script>
+(function(){
+  var p = new URLSearchParams(location.search);
+  var code = p.get('code'), err = p.get('error'), st = p.get('state');
+  var c = document.getElementById('content');
+  if (code) {
+    c.innerHTML =
+      '<p><b>RU:</b> Авторизация прошла. Скопируйте код ниже и отправьте его ассистенту.</p>' +
+      '<p><b>EN:</b> Authorized. Copy the code below and send it to your assistant.</p>' +
+      '<div class="box"><textarea id="t"></textarea><br><br><button id="b">Copy / Скопировать</button> <span id="m"></span></div>';
+    var txt = location.href;
+    document.getElementById('t').value = txt;
+    document.getElementById('b').onclick = function(){
+      var t = document.getElementById('t'); t.select();
+      try { navigator.clipboard.writeText(txt); } catch(e) { document.execCommand('copy'); }
+      document.getElementById('m').textContent = '✓ copied';
+    };
+  } else if (err) {
+    c.innerHTML = '<div class="box">❌ Error: <code>' + (err + ' ' + (p.get('error_description')||'')) + '</code></div>';
+  } else {
+    c.innerHTML = '<div class="box">Это служебная страница для возврата после авторизации TikTok.<br>' +
+      'This is the OAuth redirect page for the TikTok authorization flow.</div>';
+  }
+})();
+</script>
+</body>
+</html>
