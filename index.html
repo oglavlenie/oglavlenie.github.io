@@ -330,6 +330,25 @@ a{color:inherit}
   font-size:15px;color:var(--muted)}
 .who-note b{color:var(--text)}
 
+
+/* ── премиум-вид (статус / презентабельность / реклама) ── */
+.prem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.prem-card{background:var(--card);border:1px solid var(--stroke);border-radius:var(--r-lg);padding:28px;
+  position:relative;overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .3s ease,border-color .3s ease}
+.prem-card:hover{transform:translateY(-4px);border-color:rgba(124,108,255,.5)}
+.prem-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--violet),transparent);opacity:.6}
+.prem-ico{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:23px;margin-bottom:16px;background:rgba(124,108,255,.12);border:1px solid rgba(124,108,255,.3)}
+.prem-card h3{font-size:17.5px;font-weight:700;margin-bottom:12px;line-height:1.4}
+.prem-card p{font-size:14.5px;color:var(--muted)}
+.prem-note{margin-top:24px;padding:22px 28px;border-radius:var(--r);text-align:center;
+  background:linear-gradient(90deg,rgba(124,108,255,.1),rgba(232,95,168,.08));border:1px solid rgba(124,108,255,.3);
+  font-size:15px;color:var(--muted)}
+.prem-note b{color:var(--text)}
+@media (max-width:1020px){.prem-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:760px){.prem-grid{grid-template-columns:1fr}}
+
 /* ── тарифы ──────────────────────────────────────── */
 .price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:stretch}
 .price{background:var(--card);border:1px solid var(--stroke);border-radius:var(--r-lg);padding:34px 30px;
@@ -534,6 +553,14 @@ footer{border-top:1px solid var(--stroke);margin-top:90px;padding:36px 0 44px}
         },
         {
           "@type": "Question",
+          "name": "Помогает ли оглавление продавать рекламу в канале?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Косвенно — да. Ставку за размещение диктуют аудитория и охваты, их оглавление не меняет. Но рекламодатель начинает с впечатления: канал с каталогом в шапке выглядит как ведомый проект, а просмотры старых постов показывают, что история живая. Каталог можно показать в медиаките — это аргумент в переговорах."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "Как оплатить и можно ли вернуть деньги?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -662,6 +689,7 @@ footer{border-top:1px solid var(--stroke);margin-top:90px;padding:36px 0 44px}
     <span class="marquee-item"><span data-i18n="mq8">14 дней на возврат</span> <span class="sep">◆</span></span>
     <span class="marquee-item"><span data-i18n="mq9">RU / EN</span> <span class="sep">◆</span></span>
     <span class="marquee-item"><span data-i18n="mq10">Год сразу — 2 месяца в подарок</span> <span class="sep">◆</span></span>
+    <span class="marquee-item"><span data-i18n="mq11">👑 Премиум-вид канала</span> <span class="sep">◆</span></span>
   </div>
 </div>
 
@@ -855,6 +883,35 @@ footer{border-top:1px solid var(--stroke);margin-top:90px;padding:36px 0 44px}
   </div>
 </section>
 
+<!-- ═══ ПРЕМИУМ-ВИД (статус / презентабельность / реклама) ═══ -->
+<section class="section" id="premium" style="padding-top:0">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-tag" data-i18n="prem_tag">Статус</div>
+      <h2 class="sec-title" data-i18n="prem_title">Канал с каталогом выглядит дороже</h2>
+      <p class="sec-sub" data-i18n="prem_sub">У топовых медиа навигация по архиву есть, у 99% каналов — нет. Кнопка «Оглавление» в шапке работает как визитка: она говорит, что каналом управляют профессионально.</p>
+    </div>
+    <div class="prem-grid">
+      <div class="prem-card reveal">
+        <div class="prem-ico">👑</div>
+        <h3 data-i18n="pm1h">Свой экран в Telegram</h3>
+        <p data-i18n="pm1p">У канала появляется собственное приложение: кнопка в шапке открывает полноценный каталог прямо в мессенджере. Не ссылка в браузер, а аккуратный интерфейс — так выглядят каналы, в которых всё продумано.</p>
+      </div>
+      <div class="prem-card reveal">
+        <div class="prem-ico">✨</div>
+        <h3 data-i18n="pm2h">История — на виду</h3>
+        <p data-i18n="pm2p">Годами накопленный архив перестаёт быть простынёй в глубине ленты: объём, структура и рубрики видны с первой секунды. Новый подписчик видит масштаб проекта, а не последние десять постов.</p>
+      </div>
+      <div class="prem-card reveal">
+        <div class="prem-ico">💰</div>
+        <h3 data-i18n="pm3h">Плюс к продаже рекламы</h3>
+        <p data-i18n="pm3p">Рекламодатель выбирает площадку глазами. Каталог в шапке — аргумент «этот канал ведут всерьёз», а просмотры старых постов показывают живую историю. Покажите каталог в медиаките — впечатление работает ещё до цифр.</p>
+      </div>
+    </div>
+    <div class="prem-note reveal" data-i18n="prem_note"><b>Честно:</b> ставку за размещение диктуют аудитория и охваты — оглавление их не поднимает. Оно работает на впечатление и удержание: площадка, где удобно выбирать контент, запоминается рекламодателю.</div>
+  </div>
+</section>
+
 <!-- ═══ КАК ЗАПУСТИТЬ ═══ -->
 <section class="section" id="how" style="padding-top:0">
   <div class="wrap">
@@ -1024,6 +1081,10 @@ footer{border-top:1px solid var(--stroke);margin-top:90px;padding:36px 0 44px}
       <details class="faq-item">
         <summary class="faq-q" data-i18n="q5t">Как обновлять каталог?</summary>
         <div class="faq-a" data-i18n="q5a">Просто редактируйте канал как обычно. При следующей сборке — или автоматически через GitHub Actions — каталог подхватит изменения. Обновления v1.x бесплатны для всех тарифов.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q" data-i18n="q7t">Помогает ли оглавление продавать рекламу в канале?</summary>
+        <div class="faq-a" data-i18n="q7a">Косвенно — да. Ставку за размещение диктуют аудитория и охваты, их оглавление не меняет. Но рекламодатель начинает с впечатления: канал с каталогом в шапке выглядит как ведомый проект, а просмотры старых постов показывают, что история живая. Каталог можно показать в медиаките — это аргумент в переговорах.</div>
       </details>
       <details class="faq-item">
         <summary class="faq-q" data-i18n="q6t">Как оплатить и можно ли вернуть деньги?</summary>
@@ -1316,6 +1377,19 @@ const STR=[
 ["try3p",`Через минуту — живое оглавление твоего канала: темы, месяцы, поиск. Понравится — подключим целиком.`,`In a minute — a live table of contents of your channel: topics, months, search. Like it — we'll connect the full one.`],
 ["try3t",`⏱ ссылка живёт 48 часов`,`⏱ the link lives for 48 hours`],
 ["try_qr",`Наведи камеру Telegram — откроется демо-бот`,`Point the Telegram camera — the demo bot opens`],
+["prem_tag",`Статус`,`Status`],
+["prem_title",`Канал с каталогом выглядит дороже`,`A channel with a catalog looks more premium`],
+["prem_sub",`У топовых медиа навигация по архиву есть, у 99% каналов — нет. Кнопка «Оглавление» в шапке работает как визитка: она говорит, что каналом управляют профессионально.`,`Top media outlets have archive navigation — 99% of channels don't. The “Table of Contents” button in the header works like a business card: it says the channel is run professionally.`],
+["pm1h",`Свой экран в Telegram`,`Its own screen in Telegram`],
+["pm1p",`У канала появляется собственное приложение: кнопка в шапке открывает полноценный каталог прямо в мессенджере. Не ссылка в браузер, а аккуратный интерфейс — так выглядят каналы, в которых всё продумано.`,`The channel gets its own in-app presence: the button in the header opens a full catalog right inside the messenger. Not a browser link — a polished interface. This is what channels look like when everything is thought through.`],
+["pm2h",`История — на виду`,`History in plain sight`],
+["pm2p",`Годами накопленный архив перестаёт быть простынёй в глубине ленты: объём, структура и рубрики видны с первой секунды. Новый подписчик видит масштаб проекта, а не последние десять постов.`,`Years of accumulated posts stop being a pile buried in the feed: scale, structure and topics are visible from the first second. A new subscriber sees the size of the project, not just the last ten posts.`],
+["pm3h",`Плюс к продаже рекламы`,`A boost for selling ads`],
+["pm3p",`Рекламодатель выбирает площадку глазами. Каталог в шапке — аргумент «этот канал ведут всерьёз», а просмотры старых постов показывают живую историю. Покажите каталог в медиаките — впечатление работает ещё до цифр.`,`Advertisers pick a platform with their eyes. A catalog in the header says “this channel is run seriously”, and views on old posts show a living history. Show the catalog in your media kit — impressions work before the numbers do.`],
+["prem_note",`<b>Честно:</b> ставку за размещение диктуют аудитория и охваты — оглавление их не поднимает. Оно работает на впечатление и удержание: площадка, где удобно выбирать контент, запоминается рекламодателю.`,`<b>To be fair:</b> ad rates are set by audience and reach — the catalog doesn't change those. It works on impressions and retention: a platform where it's easy to browse content is the one advertisers remember.`],
+["q7t",`Помогает ли оглавление продавать рекламу в канале?`,`Does the catalog help sell ads in the channel?`],
+["q7a",`Косвенно — да. Ставку за размещение диктуют аудитория и охваты, их оглавление не меняет. Но рекламодатель начинает с впечатления: канал с каталогом в шапке выглядит как ведомый проект, а просмотры старых постов показывают, что история живая. Каталог можно показать в медиаките — это аргумент в переговорах.`,`Indirectly — yes. Ad rates are driven by audience size and reach, which the catalog doesn't change. But advertisers start with impressions: a channel with a catalog in the header looks like a professionally run project, and views on old posts show the history is alive. Show the catalog in your media kit — it's an argument in negotiations.`],
+["mq11",`👑 Премиум-вид канала`,`👑 A premium look`],
 ["try_btn",`🧪 Примерь на свой канал`,`🧪 Try it on your channel`],
 ];
 const I18N={ru:{},en:{}};
